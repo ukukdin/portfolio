@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project2.movieproject.user.UserMapper" > 
+
+	<insert id="regist">
+		insert into USER(
+						user_id,
+						user_gender,
+						user_birth,
+						user_email,
+						user_auth,
+						user_admin,
+						user_name,
+						user_phone,
+						user_password)
+		values(
+				#{user_id},
+				#{user_gender},
+				#{user_birth},
+				#{user_email},
+				#{user_auth},
+				#{user_admin},
+				#{user_name},
+				#{user_phone},
+				#{user_password}
+				)
+	</insert>
+	
+	<insert id="qa_regist">
+		insert into QA(
+						user_id,
+						qa_title,
+						qa_content
+						)
+		values(
+				#{user_id},
+				#{qa_title},
+				#{qa_content}
+				)
+	</insert>
+	
+	<select id="idCheck" resultType="int">
+        SELECT COUNT(*) AS CNT FROM USER WHERE user_id = #{id}
+    </select>
+    
+    <select id="emailCheck" resultType="int">
+    	SELECT COUNT(*) AS CNT FROM USER WHERE user_email = #{email}
+    </select>
+    
+    <select id="userdata" resultType="UserVO">
+    	SELECT * from USER where user_id = #{db_id}
+    </select>
+        
+    <select id="myqa_read" resultType="qaVO">
+    	SELECT * from QA where user_id = #{user_id}
+    </select>
+    
+    <select id="qa_read" resultType="qaVO">
+    	SELECT * from QA where qa_key = #{qa_key}
+    </select>
+    
+    <select id="qa_list" resultType="qaVO">
+    	SELECT * from QA
+    </select>
+    
+       
+    <select id="qa_table" resultType="qaVO">
+    	 <![CDATA[
+      SELECT *
+      FROM (SELECT A.*,
+                @ROWNUM := @ROWNUM + 1 AS RN
+            FROM (SELECT *
+                  FROM QA
+                  where 
+                  ]]>
+                  <if test="searchType == 'all'">
+                  user_id like CONCAT('%', #{searchName},'%') 
+                  or qa_title like CONCAT('%', #{searchName},'%')
+                  or qa_content like CONCAT('%', #{searchName},'%')
+                  
+                 
+                  </if>
+               
+                  <if test="searchType == 'title'">
+                  qa_title like CONCAT('%', #{searchName},'%')
+                  </if>
+                  <if test="searchType == 'titcont'">
+                  qa_title like CONCAT('%', #{searchName},'%')
+                  or qa_content like CONCAT('%', #{searchName},'%')
+                  </if>
+                   <if test="searchType == 'titnick'">
+                   qa_title like CONCAT('%', #{searchName},'%')
+                  or qa_content like CONCAT('%', #{searchName},'%')
+                  </if>
+
+               ORDER BY qa_date DESC)A, (SELECT @ROWNUM := 0) D
+      <![CDATA[
+      )B
+      WHERE rn > (#{page}-1) * #{amount} AND rn <= #{page} * #{amount}
+      ]]>
+    </select>
+    
+    
+    
+    <select id="FindId" resultType="int">
+        SELECT COUNT(*) AS CNT FROM USER WHERE user_name = #{user_name} and user_email = #{user_email}
+    </select>
+    
+    <select id="FindyourId" resultType="String">
+        SELECT user_id FROM USER WHERE user_name = #{user_name} and user_email = #{user_email}
+    </select>
+    
+    <select id="FindPw" resultType="int">
+        SELECT COUNT(*) AS CNT FROM USER WHERE user_id = #{user_id} and user_email = #{user_email}
+    </select>
+    
+    <select id="mycomment" resultType="CommentVO">
+    	SELECT * from COMMENT where user_id = #{user_id}
+    </select>
+    
+    
+<select id="userlist" resultType="UserVO">
+   <![CDATA[
+      SELECT *
+      FROM (SELECT A.*,
+                @ROWNUM := @ROWNUM + 1 AS RN
+            FROM (SELECT *
+                  FROM USER
+                  WHERE user_admin = 0
+                  ]]>
+                  <if test="searchType == 'all'">
+                  and (user_id like CONCAT('%', #{searchName},'%') 
+                  or user_email like CONCAT('%', #{searchName},'%'))
+                  </if>
+               
+                  <if test="searchType == 'email'">
+                  and user_email like CONCAT('%', #{searchName},'%')
+                  </if>
+                  <if test="searchType == 'id'">
+                  and user_id like CONCAT('%', #{searchName},'%')
+                  </if>
+
+               ORDER BY USER_date DESC)A, (SELECT @ROWNUM := 0) D
+      <![CDATA[
+      )B
+      WHERE rn > (#{page}-1) * #{amount} AND rn <= #{page} * #{amount}
+      ]]>
+    
+     </select>
+     
+     <select id="total" resultType="int">
+
+      select count(*) from
+      USER
+
+      <if test="searchType =='email'">
+                  where user_email like CONCAT('%', #{searchName},'%')
+      </if>
+      <if test="searchType =='all'">
+                  where (user_id like CONCAT('%', #{searchName},'%') 
+                  or user_email like CONCAT('%', #{searchName},'%'))
+      </if>
+      <if test="searchType =='id'">
+                  where user_id like CONCAT('%', #{searchName},'%')
+      </if>
+
+   </select>
+   
+   	<select id="movie_like" resultType="UserVO">
+
+		SELECT USER.user_id,
+		MOVIE_LIKE.MOVIE_KOFICCD,
+		MOVIE.MOVIE_NM,
+		MOVIE.MOVIE_Iurl
+		FROM USER
+		LEFT JOIN MOVIE_LIKE ON USER.USER_ID = MOVIE_LIKE.USER_ID
+		LEFT JOIN MOVIE ON MOVIE_LIKE.MOVIE_KOFICCD = MOVIE.MOVIE_KOFICCD
+		where USER.user_id = #{user_id}
+
+	</select>
+	<select id="getUserCount" resultType="UserVO">
+		select substring(user_date, 1,4) as year, 
+			   substring(user_date,6,2) as month, count(*) as count from USER where user_date like #{month};
+
+	</select>
+	
+	<select id="user_buy_list" resultType="UserVO">
+	  SELECT USER.user_id,
+		MOVIE.MOVIE_KOFICCD,
+        MOVIE.MOVIE_NM,
+        MOVIE.MOVIE_Iurl
+	FROM USER
+    LEFT JOIN BUY ON USER.user_id = BUY.user_id
+    LEFT JOIN MOVIE ON BUY.MOVIE_KOFICCD = MOVIE.MOVIE_KOFICCD
+    where USER.user_id=#{user_id}
+	</select>
+	
+	<select id="user_rent_list" resultType="UserVO">
+	  SELECT USER.user_id,
+		MOVIE.MOVIE_KOFICCD,
+        MOVIE.MOVIE_NM,
+        MOVIE.MOVIE_Iurl,
+        RENT.RENT_ENDDATE,
+        RENT.RENT_STARTDATE
+	FROM USER
+    LEFT JOIN RENT ON USER.user_id = RENT.USER_ID
+    LEFT JOIN MOVIE ON RENT.MOVIE_KOFICCD = MOVIE.MOVIE_KOFICCD
+    where USER.user_id = #{user_id}
+	</select>
+
+    <update id="user_update">
+    	update USER
+    	<if test="user_newemail != '' and user_newemail != null">
+    	set user_email = #{user_newemail}
+    	</if>
+    	<if test="user_newpassword != '' and user_newpassword != null">
+    	set user_password = #{user_newpassword}
+    	</if>
+    	<if test="user_newphone != '' and user_newphone != null">
+    	set user_phone = #{user_newphone}
+    	</if>
+    	<if test="user_newbirth != '' and user_newbirth != null">
+    	set user_birth = #{user_newbirth}
+    	</if>
+		where user_id = #{user_id}
+    </update>
+    
+    <update id="qa_update">
+    	update QA
+    	set qa_comment = #{qa_comment}
+    	where qa_key = #{qa_key}
+    </update>
+    
+    <update id="auth_update">
+    	update USER
+    	set user_auth = true
+    	where user_id = #{user_id}
+    </update>
+    
+    
+ 	<delete id="user_delete">
+		delete from USER 
+		where user_id = #{user_id}
+	</delete> 
+
+
+	
+	
+</mapper>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/userMypage.css}" />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    
+   <div class="userMypage">
+    <div class="wrap">
+       <div class="area">
+          <div class="mypage_util">
+             <h2 class="mypage_title">유저 영상 정보</h2>
+             <div class="mypage_container">
+                <ul class="mytab">
+                   <li id="a1" data-tg="#my" class="mylisttab now"><a class="tabplay" href="">대여 영상</a></li>
+                   <li id="a2" data-tg="#buy" class="mylisttab"><a class="tabplay" href="">구매 영상</a></li>
+                </ul>
+                <br>
+                <div id="my" class="xxx yyy">
+                   <div class="mybox" id="if_rent_data_null" th:each="vo, state : ${user_rent_list}">
+                        <a th:href="@{'/movie/movieDetail?movie_koficCd=' + ${user_rent_list.get(state.index).movie_koficcd}}">
+                        <img th:src="'https://image.tmdb.org/t/p/w92' + ${user_rent_list.get(state.index).movie_iurl}" alt=""  style="float: left"></a>
+                        <div class="mypage_left" >
+                           <ul>
+                              <li><a>영화 제목</a></li>
+                              <li><a>대여 시작일</a></li>
+                              <li><a>대여 종료일</a></li>
+                           </ul>
+
+                        </div>
+
+                        <div class="mypage_right" >
+                           <ul>
+                              <li><a>[[${user_rent_list.get(state.index).movie_nm}]]</a></li>
+                              <li><a>[[${user_rent_list.get(state.index).rent_startdate}]]</a></li>
+                              <li><a>[[${user_rent_list.get(state.index).rent_enddate}]]</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                </div>
+
+                <div id="buy" class="xxx ">
+                   <div class="mybox" id="if_buy_data_null" th:each="vo, state : ${user_buy_list}">
+                        <a th:href="@{'/movie/movieDetail?movie_koficCd=' + ${user_buy_list.get(state.index).movie_koficcd}}">
+                        <img th:src="'https://image.tmdb.org/t/p/w92' + ${user_buy_list.get(state.index).movie_iurl}" alt=""  style="float: left"></a>
+                        <div class="mypage_left" >
+                           <ul>
+                              <li><a>영화 제목</a></li>
+                              <li><a>구매/대여 여부</a></li>
+                              <li><a>남은 기간</a></li>
+                           </ul>
+
+                        </div>
+
+                        <div class="mypage_right" >
+                           <ul>
+                              <li><a>[[${user_buy_list.get(state.index).movie_nm}]]</a></li>
+                              <li><a>구매완료</a></li>
+                              <li><a>구매완료</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                </div>
+
+
+
+
+             </div>
+          </div>
+
+       </div>
+    </div>
+    </div>
+    
+</body>
+
+
+<script th:inline ="javascript">
+
+
+    var mytab = document.querySelector(".mytab");
+    var mytabli = document.getElementsByClassName("mylisttab");
+ 
+    // console.log(mytabli.className);
+    mytab.onclick = function (e) {
+       e.preventDefault();
+       if (e.target.tagName != "A") return;
+       // console.log(e.target.parentElement.dataset.tg)
+ 
+       document.querySelectorAll(".xxx").forEach(function (value, index) {
+          value.classList.remove("yyy");
+ 
+       })
+       document.querySelectorAll(".mylisttab").forEach(function (value, index) {
+          value.classList.remove("now");
+       })
+ 
+       var now = e.target.parentElement.classList;
+ 
+ 
+ 
+       var idx = e.target.parentElement.dataset.tg;
+       document.querySelector(idx).classList.add("yyy");
+       var idx2 = "#" + e.target.parentElement.id;
+       document.querySelector(idx2).classList.add("now");
+ 
+       if (idx == "#mynotice") {
+          btn.style.display = "none";
+       } else {
+          btn.style.display = "block"
+       }
+ 
+       if (idx == "#favorite") {
+          delbtn.style.display = "inline-block";
+       } else {
+          delbtn.style.display = "none";
+       }
+    }
+ 
+       console.log(pass_count.length);
+ </script>
+</html>

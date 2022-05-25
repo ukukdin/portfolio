@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+
+<th:block th:replace="~{./include/layout :: setContent(~{:: .main})}">
+
+	<div class="main">
+		<div class="main_banner">
+			<a class="main_prev" onclick="prevSlide()">&#10094;</a> 
+			<div class="mySlideDiv fade" th:each="vo : ${main_banner}">
+            	<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+            		<img th:src="'https://image.tmdb.org/t/p/w400' + ${vo.movie_iUrl}">
+            	</a>
+        	</div>
+			<a class="main_next" onclick="nextSlide()">&#10095;</a>
+
+		</div>
+		
+		<div class="main_notices" style="display:none">
+			공지사항
+			<div>
+				<ul>
+				</ul>
+			</div>
+		</div>
+		
+		<div id="rank_container">
+			<div>
+				<section class="rank_section">
+					<div class="row">
+						<div class="rank_theme">
+							<div class="rank_theme_title">
+								<strong style="font-size: 14px; font-weight: bold;">
+									구매순위
+								</strong>
+								<span style="font-size: 12px; color: gray;">
+									주제별로 분류된 영화 구매순위 모음
+								</span>
+							</div>
+							<br><br>
+							<div class="rank_theme_menu">
+								<ul id="nation_menu" class="rank_theme_menu_list">
+									<li id="nation_all" class="nation_list select">
+										<a href="#" class="rank_theme_menu_list_sub">
+											전체
+										</a>
+									</li>
+									<!-- <li id="nation_kor" class="nation_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											국내영화
+										</a>
+									</li>
+									<li id="nation_over" class="nation_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											해외영화
+										</a>
+									</li> -->
+								</ul>
+							</div>
+							<div class="rank_theme_menu">
+								<ul id="genre_menu" class="rank_theme_menu_list">
+									<li id="genre_all" class="genre_list select">
+										<a href="#"  class="rank_theme_menu_list_sub">
+											전체
+										</a>
+									</li>
+									<li id="genre_act" class="genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											액션
+										</a>
+									</li>
+									<li id="genre_fan" class="genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											SF/판타지
+										</a>
+									</li>
+									<li id="genre_cri" class="genre_list">
+									<a href="#" class="rank_theme_menu_list_sub">
+											범죄
+										</a>
+									</li>
+									<li id="genre_rom" class="genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											로맨스
+										</a>
+									</li>
+									<li id="genre_com" class="genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											코미디
+										</a>
+									</li>
+									<li id="genre_hor" class="genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											공포/스릴러
+										</a>
+									</li>
+									<li id="genre_war" class="genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											전쟁
+										</a>
+									</li>
+									<li id="genre_dra" class="genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											드라마
+										</a>
+									</li>
+									<li id="genre_ani" class="genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											애니메이션
+										</a>
+									</li>
+									<li id="genre_his" class="genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											사극
+										</a>
+									</li>
+									<li id="genre_doc" class="genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											다큐멘터리
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="rank_theme_movie_list">
+							<ul id="nation_all_img" class="nation_movie_list">
+								<li id="genre_all_img" class="genre_movie_list" th:each="vo, state : ${main_all_all}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+								<li id="genre_act_img" class="genre_movie_list" th:each="vo, state : ${main_all_act}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+								<li id="genre_fan_img" class="genre_movie_list" th:each="vo, state : ${main_all_fan}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+								<li id="genre_cri_img" class="genre_movie_list" th:each="vo, state : ${main_all_crime}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+								<li id="genre_rom_img" class="genre_movie_list" th:each="vo, state : ${main_all_rom}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+								<li id="genre_com_img" class="genre_movie_list" th:each="vo, state : ${main_all_com}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+								<li id="genre_hor_img" class="genre_movie_list" th:each="vo, state : ${main_all_hor}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section class="rank_section2">
+					<div class="row">
+						<div class="rank_movie">
+							<div class="rank_movie_title">
+								<ul id="" class="rank_movie_list">
+									<li class="rank_theme_menu_list_sub">TOP 10</li>
+								</ul>
+							</div>
+							<div class="rank_movie_title">
+								<ul class="rank_movie_list">
+									<li th:each="vo, state : ${main_rankList}" class="rank_theme_menu_list_sub2">
+										<span>
+											<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+												<strong>
+													[[${state.index + 1}]]. [[${vo.movie_nm}]]
+												</strong>
+											</a>
+										</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div>
+				<section class="rank_section">
+					<div class="row">
+						<div class="rank_theme">
+							<div class="rank_theme_title">
+								<strong style="font-size: 14px; font-weight: bold;">
+									대여순위
+								</strong>
+								<span style="font-size: 12px; color: gray;">
+									주제별로 분류된 영화 대여순위 모음
+								</span>
+							</div>
+							<br><br>
+							<div class="rank_theme_menu">
+								<ul id="nation_menu" class="rank_theme_menu_list">
+									<li id="nation_all" class="nation_list select">
+										<a href="#" class="rank_theme_menu_list_sub">
+											전체
+										</a>
+									</li>
+									<!-- <li id="nation_kor" class="nation_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											국내영화
+										</a>
+									</li>
+									<li id="nation_over" class="nation_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											해외영화
+										</a>
+									</li> -->
+								</ul>
+							</div>
+							<div class="rank_theme_menu">
+								<ul id="rent_genre_menu" class="rank_theme_menu_list">
+									<li id="rent_genre_all" class="rent_genre_list select">
+										<a href="#"  class="rank_theme_menu_list_sub">
+											전체
+										</a>
+									</li>
+									<li id="rent_genre_act" class="rent_genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											액션
+										</a>
+									</li>
+									<li id="rent_genre_fan" class="rent_genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											SF/판타지
+										</a>
+									</li>
+									<li id="rent_genre_cri" class="rent_genre_list">
+									<a href="#" class="rank_theme_menu_list_sub">
+											범죄
+										</a>
+									</li>
+									<li id="rent_genre_rom" class="rent_genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											로맨스
+										</a>
+									</li>
+									<li id="rent_genre_com" class="rent_genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											코미디
+										</a>
+									</li>
+									<li id="rent_genre_hor" class="rent_genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											공포/스릴러
+										</a>
+									</li>
+									<li id="rent_genre_war" class="rent_genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											전쟁
+										</a>
+									</li>
+									<li id="rent_genre_dra" class="rent_genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											드라마
+										</a>
+									</li>
+									<li id="rent_genre_ani" class="rent_genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											애니메이션
+										</a>
+									</li>
+									<li id="rent_genre_his" class="rent_genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											사극
+										</a>
+									</li>
+									<li id="rent_genre_doc" class="rent_genre_list">
+										<a href="#" class="rank_theme_menu_list_sub">
+											다큐멘터리
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="rank_theme_movie_list">
+							<ul id="rent_nation_all_img" class="rent_nation_movie_list">
+								<li id="rent_genre_all_img" class="rent_genre_movie_list"  th:each="vo, state : ${rent_all_all}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+								<li id="rent_genre_act_img" class="rent_genre_movie_list" th:each="vo, state : ${rent_all_act}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+								<li id="rent_genre_fan_img" class="rent_genre_movie_list" th:each="vo, state : ${rent_all_fan}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+								<li id="rent_genre_cri_img" class="rent_genre_movie_list" th:each="vo, state : ${rent_all_crime}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+								<li id="rent_genre_rom_img" class="rent_genre_movie_list" th:each="vo, state : ${rent_all_rom}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+								<li id="rent_genre_com_img" class="rent_genre_movie_list" th:each="vo, state : ${rent_all_com}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+								<li id="rent_genre_hor_img" class="rent_genre_movie_list" th:each="vo, state : ${rent_all_hor}">
+									<div class="rank_theme_movie_list_img">
+										<span style="vertical-align:top;"><strong>[[${state.index + 1}]]</strong></span>
+										<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+											<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" width="140px" height="210px">
+										</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section class="rank_section2">
+					<div class="row">
+						<div class="rank_movie">
+							<div class="rank_movie_title">
+								<ul id="" class="rank_movie_list">
+									<li class="rank_theme_menu_list_sub">TOP 10</li>
+								</ul>
+							</div>
+							<div class="rank_movie_title">
+								<ul class="rank_movie_list">
+									<li th:each="vo, state : ${main_rentRankList}" class="rank_theme_menu_list_sub2">
+										<span>
+											<a th:href="@{/movie/movieDetail(movie_koficCd=${vo.movie_koficCd})}">
+												<strong>
+													[[${state.index + 1}]]. [[${vo.movie_nm}]]
+												</strong>
+											</a>
+										</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			
+		</div>
+	</div>
+	
+</th:block>
+
+<script th:inline="javascript">
+
+	$(document).ready(function () {
+		$(".mySlideDiv").eq(0).addClass("active");
+		$(".mySlideDiv").not(".active").hide(); //화면 로딩 후 첫번째 div를 제외한 나머지 숨김
+		document.querySelector("#nation_all_img").classList.add("view");
+		document.querySelectorAll("#genre_all_img").forEach(function(value, index) {
+            value.classList.add("view");
+        })
+        document.querySelector("#rent_nation_all_img").classList.add("view");
+		document.querySelectorAll("#rent_genre_all_img").forEach(function(value, index) {
+            value.classList.add("view");
+        })
+	
+		setInterval(nextSlide, 5000); //4초(4000)마다 다음 슬라이드로 넘어감
+	});
+
+   (function() {
+      var msg = JSON.parse('[[${msg}]]');
+      if (msg != null) {
+         alert(msg);
+      }
+   })();
+   
+   
+    
+	//이전 슬라이드
+	function prevSlide() {
+		$(".mySlideDiv").hide(); //모든 div 숨김
+		var allSlide = $(".mySlideDiv"); //모든 div 객체를 변수에 저장
+		var currentIndex = 0; //현재 나타난 슬라이드의 인덱스 변수
+		
+		//반복문으로 현재 active클래스를 가진 div를 찾아 index 저장
+		$(".mySlideDiv").each(function(index,item){ 
+			if($(this).hasClass("active")) {
+				currentIndex = index;
+			}
+	        
+		});
+		
+		//새롭게 나타낼 div의 index
+		var newIndex = 0;
+	    
+		if(currentIndex <= 0) {
+			//현재 슬라이드의 index가 0인 경우 마지막 슬라이드로 보냄(무한반복)
+			newIndex = allSlide.length-1;
+		} else {
+			//현재 슬라이드의 index에서 한 칸 만큼 뒤로 간 index 지정
+			newIndex = currentIndex-1;
+		}
+	
+		//모든 div에서 active 클래스 제거
+		$(".mySlideDiv").removeClass("active");
+	    
+		//새롭게 지정한 index번째 슬라이드에 active 클래스 부여 후 show()
+		$(".mySlideDiv").eq(newIndex).addClass("active");
+		$(".mySlideDiv").eq(newIndex).show();
+	
+	}
+	
+	//다음 슬라이드
+	function nextSlide() {
+		$(".mySlideDiv").hide();
+		var allSlide = $(".mySlideDiv");
+		var currentIndex = 0;
+		
+		$(".mySlideDiv").each(function(index,item){
+			if($(this).hasClass("active")) {
+				currentIndex = index;
+			}
+	        
+		});
+		
+		var newIndex = 0;
+		
+		if(currentIndex >= allSlide.length-1) {
+			//현재 슬라이드 index가 마지막 순서면 0번째로 보냄(무한반복)
+			newIndex = 0;
+		} else {
+			//현재 슬라이드의 index에서 한 칸 만큼 앞으로 간 index 지정
+			newIndex = currentIndex+1;
+		}
+	
+		$(".mySlideDiv").removeClass("active");
+		
+		$(".mySlideDiv").eq(newIndex).addClass("active");
+		$(".mySlideDiv").eq(newIndex).show();
+		
+	}
+	
+	/* var nation_menu = document.querySelector("#nation_menu");
+	var nation_menu = document.querySelector("#nation_menu"); */
+    var genre_menu = document.querySelector("#genre_menu");
+    var rent_genre_menu = document.querySelector("#rent_genre_menu");
+    /* nation_menu.onclick = function(e) {
+        e.preventDefault();
+        
+        document.querySelectorAll(".nation_list").forEach(function(value, index) {
+            value.classList.remove("select");
+        })        
+        document.querySelectorAll(".nation_movie_list").forEach(function(value, index) {
+            value.classList.remove("view");
+        })
+        var idx1 = "#" + e.target.parentElement.id;
+        var idx2 = "#" + e.target.parentElement.id + "_img";
+        document.querySelector(idx1).classList.add("select");
+        document.querySelector(idx2).classList.add("view");
+    }
+    nation_menu.onclick = function(e) {
+	    e.preventDefault();
+	    
+	    document.querySelectorAll(".nation_list").forEach(function(value, index) {
+	        value.classList.remove("select");
+	    })        
+	    document.querySelectorAll(".nation_movie_list").forEach(function(value, index) {
+	        value.classList.remove("view");
+	    })
+	    var idx1 = "#" + e.target.parentElement.id;
+	    var idx2 = "#" + e.target.parentElement.id + "_img";
+	    document.querySelector(idx1).classList.add("select");
+	    document.querySelector(idx2).classList.add("view");
+	} */
+    genre_menu.onclick = function(e) {
+        e.preventDefault();
+        
+        document.querySelectorAll(".genre_list").forEach(function(value, index) {
+            value.classList.remove("select");
+        })        
+        document.querySelectorAll(".genre_movie_list").forEach(function(value, index) {
+            value.classList.remove("view");
+        })
+        var idx1 = "#" + e.target.parentElement.id;
+        var idx2 = "#" + e.target.parentElement.id + "_img";
+        document.querySelector(idx1).classList.add("select");
+        document.querySelectorAll(idx2).forEach(function(value, index) {
+            value.classList.add("view");
+        })
+    }
+	rent_genre_menu.onclick = function(e) {
+        e.preventDefault();
+        
+        document.querySelectorAll(".rent_genre_list").forEach(function(value, index) {
+            value.classList.remove("select");
+        })        
+        document.querySelectorAll(".rent_genre_movie_list").forEach(function(value, index) {
+            value.classList.remove("view");
+        })
+        var idx1 = "#" + e.target.parentElement.id;
+        var idx2 = "#" + e.target.parentElement.id + "_img";
+        document.querySelector(idx1).classList.add("select");
+        document.querySelectorAll(idx2).forEach(function(value, index) {
+            value.classList.add("view");
+        })
+    }
+
+</script>
+
+</html>

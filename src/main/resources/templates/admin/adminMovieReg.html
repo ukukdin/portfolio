@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" th:href="@{/css/adminMovieList.css}" />
+<link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}"
+        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+<th:block th:replace="~{./include/layout :: setContent(~{:: .adminMovieReg})}">
+	<div class="adminMovieReg">
+		<div class="adminMovie_movieSearch_title">API검색</div>
+		<form name="movieRegForm" action="#" method="post">
+			<div>
+	            <span>영화이름검색</span>
+	            <input type="text" class="adminMovie_movieSearch_content" id="movieName" placeholder="영화 이름 검색">
+	            <button th:href="@{조회JS}" type="button" class="adminMovie_movieSearch_btn" th:onclick="|movieSearch()|">조회</button>
+	            <button th:href="@{등록JS}" type="button" class="adminMovie_movieSearch_btn" th:onclick="|movieUpdate()|">등록</button>
+	            <button th:href="@{저장JS}" type="button" class="adminMovie_movieSearch_btn" th:onclick="|movieReg()|">저장</button>
+	          
+                   
+	            <a href="/admin/adminMovieList" class="adminMovie_registBtn">영화목록페이지</a>
+	        </div>
+	        <div>
+	        	<div class="adminMovie_movieSearch_title">
+					<span>API영화리스트</span>
+				</div>
+				<div style="width: 1130px; overflow-x: scroll">
+		            <table cellpadding="0" cellspacing="0" border="1" width="100%">
+		                <thead>
+		                    <tr>
+		                        <td><strong>이미지</strong></td>
+		                        <td><strong>영진위코드</strong></td>
+		                        <td><strong>tmdb코드</strong></td>
+		                        <td><strong>영화이름(국문)</strong></td>
+		                        <td><strong>영화이름(영문)</strong></td>
+		                        <td><strong>나이등급</strong></td>
+		                        <td><strong>장르</strong></td>
+		                        <td><strong>제작국가</strong></td>
+		                        <td><strong>개봉일</strong></td>
+		                        <td><strong>상영시간</strong></td>
+		                        <td><strong>감독</strong></td>
+		                        <td><strong>출연배우</strong></td>
+		                        <td><strong>명대사(?)</strong></td>
+		                        <td><strong>영화소개</strong></td>
+		                    </tr>
+		                </thead>
+		
+		                <tbody id="movieList">
+		                </tbody>
+		
+		            </table>
+		        </div>
+		        <br><hr><br>
+		        <div style="width: 1130px; overflow: hidden">
+		            <div style="width: 47.5%; float: left">
+		                <table cellpadding="0" cellspacing="0" border="1" style="width: 100%">
+		                    <thead>
+		                        <tr>
+		                        	<td><strong>선택</strong></td>
+		                            <td><strong>영진위코드</strong></td>
+		                            <td><strong>영화이름(국문)</strong></td>
+		                            <td><strong>영화이름(영문)</strong></td>
+		                            <td><strong>개봉일</strong></td>
+		                        </tr>
+		                    </thead>
+		                    <tbody id="koficList">
+		                    </tbody>
+		
+		                </table>
+		            </div>
+		            <div style="width:5%"></div>
+		            <div style="width: 47.5%; float: right">
+		                <table cellpadding="0" cellspacing="0" border="1" width="100%">
+		                    <thead>
+		                        <tr>
+		                        	<td><strong>선택</strong></td>
+		                            <td><strong>이미지</strong></td>
+		                            <td><strong>tmdb코드</strong></td>
+		                            <td><strong>영화이름(국문)</strong></td>
+		                            <td><strong>영화이름(영문)</strong></td>
+		                            <td><strong>개봉일</strong></td>
+		                        </tr>
+		                    </thead>
+		                    
+		                    
+		                    <tbody id="tmdbList">
+		                    </tbody>
+		
+		                </table>
+		            </div>
+		        </div>
+	        </div>
+		</form>
+	</div>
+</th:block>
+
+<script th:inline="javascript">
+    let movieListUrl = "https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=0052fe42c9b2767de41b65fb2f6b26d8&itemPerPage=100";
+    let movieDetailUrl = "https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=0052fe42c9b2767de41b65fb2f6b26d8&movieCd=";
+    let numUrl = "&curPage=";
+    let nameUrl = "&movieNm=";
+    let imgUrl = "https://image.tmdb.org/t/p/w154";
+    
+    let tmdbApi = "?api_key=382d04e6fc8cbc07290b0d512ae29171";
+    let movieSearchUrl = "https://api.themoviedb.org/3/search/movie" + tmdbApi + "&query=";
+    let movieResultUrl = "https://api.themoviedb.org/3/movie/";
+    let numUrl2 = "&page=";
+    let lan = "&language=ko";
+        
+    let koficMovie;
+    let tmdbMovie;
+    
+    let cnt1 = 0;
+    let cnt2 = 0;
+
+    function movieSearch() {
+        this.event.preventDefault();
+        $("#koficList").empty();
+        $("#tmdbList").empty();
+        let movieName = $("#movieName").val();
+        if (movieName != '' && movieName != null) {
+            getKoficList(movieName);
+            getTmdbList(movieName);
+            cnt1++;
+        } else {
+            alert("영화이름을 3글자 이상 올바르게 입력해주세요");
+        }
+    }
+
+    function movieUpdate() {    	
+    	if(cnt1 == 0) {
+    		alert("조회를 하기전에는 등록을 할 수 없습니다");
+    	} else {
+	    	let kMovie = $("input[name='koficMovie']:checked").val();
+	    	let tMovie = $("input[name='tmdbMovie']:checked").val();
+    		getMovieList(kMovie, tMovie);
+    		cnt2++;
+    	}
+    }
+    
+    function movieReg() {
+    	if(cnt2 == 0) {
+    		alert("등록을 하기 전에는 저장을 할 수 없습니다");
+    	} else {
+    		this.event.preventDefault();
+    		
+    		document.movieRegForm.action = "movieRegForm";
+    		document.movieRegForm.submit();
+    	}
+    }
+
+    let getKoficList = async function (movieName) {
+        let koficUrl = movieListUrl + nameUrl + movieName;
+
+        data = await fetch(koficUrl).then((result) => result.json());
+        koficList = data.movieListResult.movieList;
+        
+        for( let i in koficList ) {
+            $('#koficList').append(
+        	    "<tr>" + 
+                    "<td><input type='radio' name='koficMovie' value='"+ koficList[i].movieCd +"'></td>" + 
+                    "<td>" + koficList[i].movieCd + "</td>" + 
+                    "<td>" + koficList[i].movieNm + "</td>" + 
+                    "<td>" + koficList[i].movieNmEn + "</td>" + 
+            	    "<td>" + koficList[i].openDt + "</td>" + 
+                "</tr>"
+            );
+        }
+    }
+
+    let getTmdbList = async function(movieName) {
+		let tmdbUrl = movieSearchUrl + movieName + lan;
+		
+        data = await fetch(tmdbUrl).then((result) => result.json());
+        tmdbList = data.results;
+        
+        for( let i in tmdbList ) {
+        	let img = '';
+        	if(tmdbList[i].poster_path != '' && tmdbList[i].poster_path != null) {
+        		img = imgUrl + tmdbList[i].poster_path;
+        	}
+        	
+	        $('#tmdbList').append(
+	            "<tr>" + 
+                    "<td><input type='radio' name='tmdbMovie' value='"+ tmdbList[i].id +"'></td>" + 
+                    "<td><img src='" + img + "' height='100px'></td>" + 
+                    "<td>" + tmdbList[i].id + "</td>" + 
+                    "<td>" + tmdbList[i].title + "</td>" + 
+                    "<td>" + tmdbList[i].original_title + "</td>" + 
+            	    "<td>" + tmdbList[i].release_date + "</td>" +
+                "</tr>"
+	        );        		
+        }
+    }
+
+    let getMovieList = async function(kMovie, tMovie) {
+		let koficUrl = movieDetailUrl + kMovie;
+		let tmdbUrl = movieResultUrl + tMovie + tmdbApi + lan;
+		
+		data = await fetch(koficUrl).then((result) => result.json());
+		let movieResult = data.movieInfoResult.movieInfo;
+		
+		data = await fetch(tmdbUrl).then((result) => result.json());
+		let movieDetail = data;
+	
+		let nation = '';
+		let director = '';
+		let actors = '';
+		
+		if(movieResult.nations.length == 1) {
+			nation = movieResult.nations[0].nationNm;
+		} else {
+			for(let i in movieResult.nations) {
+				if(i == 0) {
+					nation = movieResult.nations[i].nationNm;
+				} else {
+					nation = nation + ", " + movieResult.nations[i].nationNm;
+				}
+			}
+		}
+		
+		if(movieResult.directors.length == 1) {
+			director = movieResult.directors[0].peopleNm;
+		} else {
+			for(let i in movieResult.directors) {
+				if(i == 0) {
+					director = movieResult.directors[i].peopleNm;
+				} else {
+					director = director + ", " + movieResult.directors[i].peopleNm;
+				}
+			}
+		}
+		if(movieResult.actors.length >= 5) {
+			for(let i = 0; i < 5; i++) {
+				if(i == 0) {
+					actors = movieResult.actors[i].peopleNm;
+				} else {
+					actors = actors + ", " + movieResult.actors[i].peopleNm;
+				}
+			}
+		} else {
+			for(let i = 0; i < movieResult.actors.length; i++) {
+				if(i == 0) {
+					actors = movieResult.actors[i].peopleNm;
+				} else {
+					actors = actors + ", " + movieResult.actors[i].peopleNm;
+				}
+			}			
+		}
+		
+		$('#movieList').append(
+			"<tr>" + 
+				"<td><input type='text' name='movie_iUrl' value='" + movieDetail.poster_path + "'></td>" + 
+				"<td><input type='text' name='movie_koficCd' value='" + movieResult.movieCd + "'></td>" + 
+				"<td><input type='text' name='movie_tmdbCd' value='" + movieDetail.id + "'></td>" + 
+				"<td><input type='text' name='movie_nm' value='" + movieResult.movieNm + "'></td>" + 
+				"<td><input type='text' name='movie_nmEn' value='" + movieResult.movieNmEn + "'></td>" + 
+				"<td><input type='text' name='movie_age' value='" + movieResult.audits[0].watchGradeNm + "'></td>" + 
+				"<td><input type='text' name='movie_gr' value='" + movieResult.genres[0].genreNm + "'></td>" + 
+				"<td><input type='text' name='movie_nt' value='" + nation + "'></td>" + 
+				"<td><input type='text' name='movie_openDt' value='" + movieResult.openDt + "'></td>" + 
+				"<td><input type='text' name='movie_time' value='" + movieResult.showTm + "'></td>" + 
+				"<td><input type='text' name='movie_dirNm' value='" + director + "'></td>" + 
+				"<td><input type='text' name='movie_actNm' value='" + actors + "'></td>" + 
+				"<td><input type='text' name='movie_tagLine' value='" + movieDetail.tagline + "'></td>" + 
+				"<td><input type='text' name='movie_ov' value='" + movieDetail.overview + "'></td>" + 
+			"</tr>"
+		);
+    }
+</script>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <form action="update_pw" method="POST">
+        <div>
+            <p>새로운 비밀번호 입력: </p><input type="password" name="newpassword" id = "updadte_new_pw" onblur="passwordchk();"><br>
+            <p>새로운 비밀번호 확인: </p><input type="password" name="user_newpassword" id = "update_new_pw_check" onblur="passwordchk();"><br>
+				<span class="password_err" id="confirmMsg" style="color:red; display:none;">비밀번호를 일치시켜주세요.</span><br>
+            <input type="submit" id="confirmBtn" style="display:none;">
+        </div>
+    </form>
+
+</body>
+
+<script th:inline="javascript">
+var update_new_pw = document.getElementById("updadte_new_pw");
+var update_new_pw_check = document.getElementById("update_new_pw_check");
+var confirmBtn = document.getElementById("confirmBtn");
+
+(function() {
+    var msg = JSON.parse('[[${msg}]]');
+    check_status = JSON.parse('[[${check_status}]]');
+    if (msg != null) {
+       alert(msg);
+       /* console.log(check_id); */
+       /* user_id.value = "${check_id}"; model에서 저장한 값을 JS에서 불러서 사용하는 방법이 뭘까? */
+    }
+    ;
+ })();
+ 
+ 
+
+function passwordchk() {
+    console.log(update_new_pw_check.value);
+    if (updadte_new_pw.value != update_new_pw_check.value) {
+       if (update_new_pw_check.value != ''
+             && update_new_pw_check.value != null) {
+          confirmMsg.style.display = "inline-block";
+          confirmBtn.style.display = "none";
+       } else {
+          confirmMsg.style.display = "none";
+       }
+    } else {
+       confirmMsg.style.display = "none";
+       confirmBtn.style.display = "inline-block";
+    }
+ };
+
+
+
+</script>
+</html>

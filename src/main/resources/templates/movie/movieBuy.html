@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@100;300;400;700&display=swap" rel="stylesheet">
+<style>
+	* {font-family: 'Noto Sans KR', sans-serif; text-decoration: none;}
+    .buyOutBox {
+    	width: 1130px;
+    	margin: 0 auto;
+    }
+    .buyUl {
+    	width: 800px;
+    	list-style: none;
+    	padding-left: 0;
+    	padding-inline-start: 0;
+    	margin: 0 auto;
+    }
+    .buyLi {list-style: none; margin:0; }
+    .collum_tit {list-style: none;}
+    .buyTitle {
+    	width: 100%;
+    	margin: 0px;
+    	box-sizing: border-box;
+    }
+    .buyTitle > h2 {
+    	padding-left:100px;
+    	font-size:20px;
+        font-weight: 400;
+    }
+    .buyImgBox {
+    	margin: 0 auto;
+    	width: 400px;
+    	height: 450px;
+    }
+    .buyImgBox > img {
+    	float: right;
+    }
+    .board_basic_view > tbody > tr> th {
+    	padding-left: 10px;
+    	font-size: 13px; 
+    	font-weight: 400;
+    	width: 80px;
+    }
+    .board_basic_view > tbody > tr> td {
+    	font-size: 12px; 
+    	font-weight: 100;
+    }
+    .buy_btn {
+    	width: 200px;
+    	height: 100px;
+    	border-radious: 4px;
+    }
+    
+    .rent, .cancel{ 
+    	width: 200px;
+    	height: 100px;
+    	background-color: black;
+    	color: white;
+    	text-decoration: none;
+    	border-radius: 4px;
+    	padding:10px 20px;
+    	margin-left:10px;
+    }
+  .rent{
+  padding-left:20px;
+  padding-right:20px;
+  	
+  }
+  .cancel {
+  padding-left:30px;
+  padding-right:30px;
+  }
+</style>
+
+</head>
+<body>
+	<form name="movieBuy" action="####" method="post">
+		<div class="buyOutBox">
+			<ul class="buyUl">
+                 <li class="collum_tit">
+                 	<div class="buyTitle">
+                 		<h2>영화 구매 정보</h2>
+                 	</div>
+              		<ul class="buyUl">
+                       	<li class="buyLi">
+                           	<table class="board_basic_view">
+                           		<tbody>
+                           			<tr display="none">
+                           				<td><input type="hidden" name="user_id" th:value="${sessionvo.user_id}"></td>
+                           			</tr>
+                           			<tr>
+                           				<td class="buyImgBox" rowspan="6"><img th:src="'https://image.tmdb.org/t/p/w300' + ${movieVO.movie_iUrl}"></td>
+                           			</tr>
+                           			<tr>
+                           				<th>영화번호</th>
+                           				<td><input type="hidden" name="movie_koficCd" th:value="${movieVO.movie_koficCd}">[[${movieVO.movie_koficCd}]]</td>
+                           			</tr>
+                           			<tr>
+                           				<th>영화명</th>
+                           				<td><input type="hidden" name="movie_nm" th:value="${movieVO.movie_nm}">[[${movieVO.movie_nm}]]</td>
+                           			</tr>
+                           			<tr>
+                            			<th>구매가격</th>
+                            			<td><input type="hidden" name="movie_sellPrice" th:value="${movieVO.movie_sellPrice}">[[${movieVO.movie_sellPrice}]]원</td>
+                            		</tr>
+                            		<tr>
+                            			<th>구매기간</th>
+                            			<td>영구 소장</td>
+                            		</tr>
+                            		<tr>
+                            			<td colspan="2" class="buy_btn">
+                            				<a class="rent" th:onclick="|requestPay()|">구매하기</a>
+                        					<a th:href="@{/movie/movieDetail(movie_koficCd=${movieVO.movie_koficCd})}" class="cancel">취소</a>
+                            			</td>
+                            		</tr>
+                            	</tbody>
+                        	</table>
+                    	</li>
+                 	</ul>
+                 </li>
+			</ul>
+		</div>
+	</form>
+</body>
+<script>
+	var IMP = window.IMP; // 생략 가능
+	IMP.init("imp91735831");
+	
+	function requestPay() {
+      // IMP.request_pay(param, callback) 결제창 호출
+      IMP.request_pay({ // param
+          pg: "kakaopay.TC0ONETIME",
+          pay_method: "card",
+          merchant_uid: "merchant_" + new Date().getTime(),
+          name: '[[${movieVO.movie_koficCd}]]',
+          custom_data: '[[${movieVO.movie_nm}]]',
+          amount: '[[${movieVO.movie_sellPrice}]]',
+          buyer_name: '[[${sessionvo.user_name}]]',
+          buyer_tel: '[[${sessionvo.user_phone}]]',
+          buyer_email: '[[${sessionvo.user_email}]]',
+      }, function (rsp) { // callback
+          if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+        	  purchase();
+            } else {
+              alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+            }
+          });
+    }
+	
+	function purchase() {
+		
+		document.movieBuy.action = "moviePurchase";
+		document.movieBuy.submit();
+	}
+</script>
+</html>

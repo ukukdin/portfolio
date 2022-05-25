@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="setContent(content)">
+<nav>				
+
+                    <ul class="mcd-menu"th:if="${vo.user_admin} == true">
+                        <li>
+                            <a href="/main" >
+                                <i class="fa fa-home"></i>
+                                <strong>메인페이지</strong>
+                                <small>Mainpage</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/adminMain1">
+                                <i class="fa fa-edit"></i>
+                                <strong>게시판</strong>
+                                <small>sweet home</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/qna">
+                                <i class="fa fa-gift" id="bpage"></i>
+                                <strong>문의사항</strong>
+                                <small>sweet home</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/notices">
+                                <i class="fa fa-globe" id="bpage1"></i>
+                                <strong>공지사항</strong>
+                                <small>sweet home</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/user/userInfo">
+                                <i class="fa fa-comments-o"></i>
+                                <strong>회원관리</strong>
+                                <small>what they say</small>
+                            </a>
+
+                        </li>
+                        <li>
+                            <a href="/admin/adminMovieReg">
+                                <i class="fa fa-comments-o"></i>
+                                <strong>영화등록</strong>
+                                <small>what they say</small>
+                            </a>
+
+                        </li>
+
+
+
+                    </ul>
+                </nav>
+</th:block>
+</html>

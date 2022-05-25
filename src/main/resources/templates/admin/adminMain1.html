@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+	
+			<link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}" />
+	
+
+
+<th:block th:replace="~{./include/layout :: setContent(~{:: .admin_outbox})}">
+
+
+
+	
+
+		<div class="admin_outbox">
+			<form action="">
+				<div class="admin_title">
+					<span class="admin_noselect">관리자 페이지</span>
+				</div>
+
+				<th:block th:replace="~{./include/layout2 :: setContent(~{:: .admin_leftbox})}">
+
+
+					<div class="admin_leftbox"></div>
+				</th:block>
+
+			
+					<div class="admin_rightbox">
+					
+						<div class="admin_box1">
+							<div class="admin_sale_board">
+								<span class="admin_wrap_cont"> 
+								<span role="admin_text" class="info_cont"> 
+									<img src="https://css.gg/dollar.css"
+										width="36" height="36" alt="" class="gg-dollar"> 
+										<span class="admin_txt_cate"> 매출량</span>
+								</span>
+								</span> 
+								<span class="admin_wrap_thumb">
+									<section class="statistics mt-4">
+										<div class="admin_row1">
+											<div class="col-lg-4">
+												<div
+													class="box d-flex rounded-2 align-items-center mb-4 mb-lg-0 p-3">
+													<i
+														class="uil-envelope-shiled fs-2 text-center bg-primary rounded-circle"></i>
+													<div class="ms-3">
+														<div class="d-flex align-tems-center">
+
+															<div id="container1"
+																style="min-width: 300px; height: 300px; margin: 0 auto"></div>
+															<div class="admin_amount"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											</div>
+									</section>
+									</span>
+								<div class="vod_sell">
+
+									<div class="pie animate" style=" --p: 60; --c: lightgreen">
+										60%</div>
+									<p>VOD 판매량</p>
+							
+								</div>
+								<div class="vod_rent">
+									<div class="pie animate" style=" --p: 40; --c: lightgreen">
+										40%</div>
+									<p>VOD 대여량</p>
+
+								</div>
+							
+						
+							<div class="person_rate">
+								<img th:src="@{https://css.gg/smile-mouth-open.css}" width="36"
+									height="40" alt="" class="gg-smile"><span
+									class="txt_cate2"> 가입자수</span>
+							<div id="container"
+								style="min-width: 300px; height: 300px; margin: 0 auto; width: 770px;"></div>
+						</div>
+							</div>
+
+							</div>
+
+					</div>
+	</div>
+				
+						</form>
+	</th:block>
+
+	    
+	
+	<!--가입자수  -->
+				<script th:inline="javascript">
+				
+				
+			
+					$(function() {
+						$('#container').highcharts(
+								{
+									
+									title : {
+										text : '',
+										x : 0
+									},
+									subtitle : {
+										text : '',
+										x : 0
+									},
+									navigation : {
+										buttonOptions : {
+											enabled : false
+										}
+									},
+									xAxis : {
+										categories : [ 'Jan', 'Feb', 'Mar',
+											'Apr', 'May', 'Jun', 'Jul',
+											'Aug', 'Sep', 'Oct', 'Nov',
+											'Dec'  ]
+									},
+									yAxis : {
+										title : {
+											text : ''
+										},
+										plotLines : [ {
+											value : 0,
+											width : 1,
+											color : '#808080'
+										} ]
+									},
+									tooltip : {
+										borderColor : '#FFDD90',
+										borderRadius : '3',
+										borderWidth : '1',
+										backgroundColor : '#FFFAD3',
+										formatter : function() {
+											return '<strong>' + this.y
+													+ '</strong>';
+										}
+									},
+									legend : {
+										enabled : false
+									},
+									credits : {
+										enabled : false
+									},
+									plotOptions : {
+										area : {
+											fillColor : '#9FDBF7',
+											lineWidth : 3,
+											marker : {
+												enabled : true,
+												fillColor : '#FFF',
+												lineColor : '#4ABDF1',
+												lineWidth : 2
+											},
+											shadow : false,
+											states : {
+												hover : {
+													lineWidth : 3
+												}
+											},
+											threshold : null
+										}
+									},
+									
+									series : [ {
+										name : '',
+										type : 'area',
+										color : '#4ABDF1',
+									/* <c:forEach var="UserVO" items ="${UVO}"> */
+										data : 
+											
+											[  [[${UserVO[0].count}]], [[${UserVO[1].count}]],  [[${UserVO[2].count}]],  [[${UserVO[3].count}]], [[${UserVO[4].count}]], [[${UserVO[5].count}]],
+											[[${UserVO[6].count}]],[[${UserVO[7].count}]], [[${UserVO[8].count}]], [[${UserVO[9].count}]], [[${UserVO[10].count}]],
+											[[${UserVO[11].count}]] ]
+									/* </c:forEach> */
+									} ]
+								});
+					});
+				/*
+					 매출량*/
+				$(function() {
+	
+						$('#container1').highcharts(
+								{
+									title : {
+										text : '',
+										x : 0
+									},
+									subtitle : {
+										text : '',
+										x : 0
+									},
+									navigation : {
+										buttonOptions : {
+											enabled : false
+										}
+									},
+									xAxis : {
+										categories : [ 'Jan', 'Feb', 'Mar',
+												'Apr', 'May', 'Jun', 'Jul',
+												'Aug', 'Sep', 'Oct', 'Nov',
+												'Dec' ]
+									},
+									yAxis : {
+										title : {
+											text : ''
+										},
+										plotLines : [ {
+											value : 0,
+											width : 1,
+											color : '#808080'
+										} ]
+									},
+									tooltip : {
+										borderColor : '#FFDD90',
+										borderRadius : '3',
+										borderWidth : '1',
+										backgroundColor : '#FFFAD3',
+										formatter : function() {
+											return '<strong>' + this.y
+													+ '</strong>';
+										}
+									},
+									legend : {
+										enabled : false
+									},
+									credits : {
+										enabled : false
+									},
+									plotOptions : {
+										area : {
+											fillColor : '#9FDBF7',
+											lineWidth : 3,
+											marker : {
+												enabled : true,
+												fillColor : '#FFF',
+												lineColor : '#4ABDF1',
+												lineWidth : 2
+											},
+											shadow : false,
+											states : {
+												hover : {
+													lineWidth : 3
+												}
+											},
+											threshold : null
+										}
+									},
+									series : [ {
+										name : '',
+										type : 'area',
+										color : '#4ABDF1',
+										
+											data : [0,
+											
+											
+											
+											30, 50, 80, 100, 200, 400,
+												300, 500, 200, 900, 820 ]
+									} ]
+								});
+					});
+				</script>
+
+</html>

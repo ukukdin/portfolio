@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project2.movieproject.admin.AdminMapper">
+
+	<!-- <select id="notices_list" resultType="adminVO"> select * from admin_notices 
+		where user_admin = 'admin' </select> -->
+
+	<insert id="noticeRegist">
+
+
+		insert into ADMIN_NOTICES(
+
+	notices_title,
+	notices_content,
+	admin_id,
+	notices_count,
+	filename,
+	FILEPATH,
+	uuid
+				)
+	values(#{notices_title},#{notices_content},#{admin_id},#{notices_count},#{filename},#{FILEPATH},#{uuid})
+
+	
+
+	</insert>
+
+
+<select id="List" resultType="adminVO">
+   <![CDATA[
+      SELECT *
+      FROM (SELECT A.*,
+                @ROWNUM := @ROWNUM + 1 AS RN
+            FROM (SELECT *
+                  FROM ADMIN_NOTICES
+                  WHERE admin_id = 'admin'
+                  ]]>
+                  <if test="searchType =='title'">
+                  and notices_title like CONCAT('%', #{searchName},'%')
+                  </if>
+                  <if test="searchType =='all'">
+                  and (notices_title like CONCAT('%', #{searchName},'%')
+                  or
+                  notices_content like CONCAT('%', #{searchName},'%'))
+                  </if>
+                  <if test="searchType == 'content'">
+                  and notices_content like CONCAT('%', #{searchName},'%')
+                  </if>
+
+               ORDER BY ADMIN_KEY DESC)A, (SELECT @ROWNUM := 0) D
+      <![CDATA[
+      )B
+      WHERE rn > (#{page}-1) * #{amount} AND rn <= #{page} * #{amount}
+      ]]>
+   </select>
+
+	
+
+
+	<select id="getcontent" resultType="adminVO">
+		select * from ADMIN_NOTICES
+		where admin_key = #{admin_key}
+	</select>
+
+	<select id="total" resultType="int">
+
+		select count(*) from
+		ADMIN_NOTICES where admin_id= 'admin'
+
+		<if test="searchType =='title'">
+			and notices_title like CONCAT('%', #{searchName},'%')
+		</if>
+		<if test="searchType =='all'">
+			and (notices_title like CONCAT('%', #{searchName},'%')
+			or
+			notices_content like CONCAT('%', #{searchName},'%'))
+		</if>
+		<if test="searchType =='content'">
+			and notices_content like CONCAT('%' #{searchName}'%')
+		</if>
+
+	</select>
+
+
+	
+	<update id="hit">
+		update ADMIN_NOTICES set notices_count=
+		notices_count+1 where
+		admin_key=#{admin_key}
+	</update>
+
+	<update id="update">
+		update ADMIN_NOTICES set
+
+		notices_content = #{notices_content},
+		notices_title = #{notices_title},
+		admin_id = #{admin_id},
+		filename =#{filename},
+		FILEPATH = #{FILEPATH},
+		uuid = #{uuid}
+
+		where admin_key = #{admin_key}
+
+	</update>
+
+	<delete id="delete">
+		delete from ADMIN_NOTICES
+		where admin_key = #{admin_key}
+		
+	</delete>
+	
+	
+	
+
+	<insert id="movieRegist">
+      INSERT INTO MOVIE(MOVIE_IURL,
+      MOVIE_KOFICCD,
+      MOVIE_TMDBCD,
+      MOVIE_NM,
+      MOVIE_NMEN,
+      MOVIE_AGE,
+      MOVIE_GR,
+      MOVIE_NT,
+      MOVIE_OPENDT,
+      MOVIE_TIME,
+      MOVIE_DIRNM,
+      MOVIE_ACTNM,
+      MOVIE_TAGLINE,
+      MOVIE_OV)
+      VALUES(#{movie_iUrl},
+      #{movie_koficCd},
+      #{movie_tmdbCd},
+      #{movie_nm},
+      #{movie_nmEn},
+      #{movie_age},
+      #{movie_gr},
+      #{movie_nt},
+      #{movie_openDt},
+      #{movie_time},
+      #{movie_dirNm},
+      #{movie_actNm},
+      #{movie_tagLine},
+      #{movie_ov})
+   </insert>
+
+	<select id="searchlist" resultType="movieVo">
+	select * from MOVIE;
+	</select>
+	
+	<select id="searchTable" resultType="MovieVO">
+		<![CDATA[
+		SELECT *
+		FROM (
+			SELECT A.*,
+				   @ROWNUM := @ROWNUM + 1 AS RN
+			FROM (
+				SELECT *
+				FROM MOVIE
+		]]>
+				<if test="searchType == 'all'">
+				WHERE (
+					 MOVIE_NM LIKE CONCAT('%', #{searchName}, '%')
+					 OR MOVIE_DIRNM LIKE CONCAT('%', #{searchName}, '%')
+					 OR MOVIE_ACTNM LIKE CONCAT('%', #{searchName}, '%')
+				)
+				
+				</if>
+				<if test="searchType == 'title'">
+				WHERE MOVIE_NM LIKE CONCAT('%', #{searchName}, '%')
+				</if>
+				<if test="searchType == 'director'">
+				WHERE MOVIE_DIRNM LIKE CONCAT('%', #{searchName}, '%')
+				</if>
+				<if test="searchType == 'actor'">
+				WHERE MOVIE_ACTNM LIKE CONCAT('%', #{searchName}, '%')
+				</if>
+				
+				
+				
+				
+				ORDER BY MOVIE_NM DESC
+			) A, (SELECT @ROWNUM := 0) D
+		<![CDATA[
+		)B
+		WHERE RN > (#{page}-1) * #{amount} AND RN <= #{page} * #{amount}
+		]]>
+	</select>
+
+
+	<select id="movieSearch" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM
+		MOVIE
+		WHERE movie_nm = #{movieName}
+	</select>
+
+	<select id="getMovieList" resultType="MovieVO">
+		<![CDATA[
+		SELECT *
+		FROM (
+			SELECT A.*,
+				   @ROWNUM := @ROWNUM + 1 AS RN
+			FROM (
+				SELECT *
+				FROM MOVIE
+		]]>
+				<if test="searchType == 'all'">
+				WHERE (
+					 MOVIE_NM LIKE CONCAT('%', #{searchName}, '%')
+					 OR MOVIE_DIRNM LIKE CONCAT('%', #{searchName}, '%')
+					 OR MOVIE_ACTNM LIKE CONCAT('%', #{searchName}, '%')
+				)
+				</if>
+				<if test="searchType == 'title'">
+				WHERE MOVIE_NM LIKE CONCAT('%', #{searchName}, '%')
+				</if>
+				<if test="searchType == 'director'">
+				WHERE MOVIE_DIRNM LIKE CONCAT('%', #{searchName}, '%')
+				</if>
+				<if test="searchType == 'actor'">
+				WHERE MOVIE_ACTNM LIKE CONCAT('%', #{searchName}, '%')
+				</if>
+				ORDER BY MOVIE_OPENDT DESC
+			) A, (SELECT @ROWNUM := 0) D
+		<![CDATA[
+		)B
+		WHERE RN > (#{page}-1) * #{amount} AND RN <= #{page} * #{amount}
+		]]>
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		SELECT COUNT(*) AS TOTAL
+		FROM MOVIE
+		<if test="searchType == 'all'">
+		WHERE (
+			 MOVIE_NM LIKE CONCAT('%', #{searchName}, '%')
+			 OR MOVIE_DIRNM LIKE CONCAT('%', #{searchName}, '%')
+			 OR MOVIE_ACTNM LIKE CONCAT('%', #{searchName}, '%')
+		)
+		</if>
+		<if test="searchType == 'title'">
+		WHERE MOVIE_NM LIKE CONCAT('%', #{searchName}, '%')
+		</if>
+		<if test="searchType == 'director'">
+		WHERE MOVIE_DIRNM LIKE CONCAT('%', #{searchName}, '%')
+		</if>
+		<if test="searchType == 'actor'">
+		WHERE MOVIE_ACTNM LIKE CONCAT('%', #{searchName}, '%')
+		</if>
+	</select>
+
+	<select id="getMovieDetail" resultType="MovieVO">
+		SELECT *
+		FROM MOVIE 
+		WHERE
+		MOVIE_KOFICCD = #{movie_koficCd}
+	</select>
+	
+	<update id="movieUpdate">
+		UPDATE MOVIE
+		SET MOVIE_VURL = #{movie_vUrl},
+			MOVIE_SELLPRICE = #{movie_sellPrice},
+			MOVIE_RENTPRICE = #{movie_rentPrice}
+		WHERE MOVIE_KOFICCD = #{movie_koficCd}
+	</update>
+
+</mapper>

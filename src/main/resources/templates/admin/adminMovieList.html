@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" th:href="@{/css/adminMovieList.css}" />
+<link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}"
+        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<th:block th:replace="~{./include/layout :: setContent(~{:: .adminMovieList})}">
+	<div class="adminMovieList">
+		<div class="adminMovie_movieSearch_title">영화검색</div>
+		<form name="adminMovieList" action="adminMovieList" method="get">
+			<input type="hidden" name="page" th:value="1">
+			<input type="hidden" name="amount" th:value="${pageVO.amount}">
+			<div>
+				<select class="adminMovie_movieSearch" name="searchType">
+					<option value="all"th:selected="${pageVO.cri.searchType} == 'all' ? 'selected' ">전체</option>
+					<option value="title"th:selected="${pageVO.cri.searchType} == 'title' ? 'selected' ">영화이름</option>
+					<option value="director"th:selected="${pageVO.cri.searchType} == 'director' ? 'selected' ">영화감독</option>
+					<option value="actor"th:selected="${pageVO.cri.searchType} == 'actor' ? 'selected' ">영화배우</option>
+				</select>
+				<input type="text" name="searchName" th:value="${pageVO.cri.searchName}" class="adminMovie_movieSearch_content" placeholder="영화 검색">
+				<input type="button" class="adminMovie_movieSearch_btn" id="adminMovie_movieSearch_btn" value="검색">
+			</div>
+			<div>
+				<div class="adminMovie_movieSearch_title">
+					<span>영화리스트</span>
+					<select class="adminMovie_movieAmount" th:onchange="|adminMovie_dataHandler(this)|">
+						<option value="10" th:selected="${pageVO.amount} == 10 ? 'selected' " >10개 보기</option>
+						<option value="20" th:selected="${pageVO.amount} == 20 ? 'selected' " >20개 보기</option>
+						<option value="40" th:selected="${pageVO.amount} == 30 ? 'selected' " >40개 보기</option>
+						<option value="80" th:selected="${pageVO.amount} == 40 ? 'selected' " >80개 보기</option>
+					</select>
+					<span class="adminMovie_movieSearch_showtoggle adminMovie_minus"></span>
+				</div>
+				<div>
+					<table class="adminMovie_movieList" cellpadding="0" cellspacing="0">
+						<tr>
+							<th>이미지</td>
+							<th>영화이름(국문)</th>
+							<th>영화이름(영문)</th>
+							<th>나이등급</th>
+							<th>영화장르</th>
+							<th>제작국가</th>
+							<th>비고</th>
+						</tr>
+						<tr th:each="vo, state : ${list}">
+							<td>
+								<img th:src="'https://image.tmdb.org/t/p/w154' + ${vo.movie_iUrl}" height="150px">
+							</td>
+							<td>
+								<a th:href="@{/admin/adminMovieDetail(movie_koficCd=${vo.movie_koficCd})}"><strong>[[${vo.movie_nm}]]</strong></a>
+							</td>
+							<td>[[${vo.movie_nmEn}]]</td>
+							<td>[[${vo.movie_age}]]</td>
+							<td>[[${vo.movie_gr}]]</td>
+							<td>[[${vo.movie_nt}]]</td>
+							<td th:if="${vo.movie_vUrl == null || vo.movie_sellPrice == null || vo.movie_rentPrice == null}">수정필요</td>
+							<td th:unless="${vo.movie_vUrl == null || vo.movie_sellPrice == null || vo.movie_rentPrice == null}"></td>
+						</tr>
+					</table>
+				</div>
+				<div class="adminMovie_moviePage">
+			 		<th:block th:replace="~{./include/page :: page( '/admin/adminMovieList' , ${pageVO} )}"></th:block>
+			 	</div>
+			</div>
+		</form>
+	</div>
+</th:block>
+<script th:inline="javascript">
+	(function() {
+      var msg = JSON.parse('[[${msg}]]');
+      if (msg != null) {
+         alert(msg);
+      }
+   })();
+	function prod_dataHandler(a) {
+		document.adminMovieList.page.value = 1;
+		document.adminMovieList.amount.value = a.value;
+		document.adminMovieList.submit();
+	}
+	
+	var searchBtn = document.getElementById("adminMovie_movieSearch_btn");
+	searchBtn.onclick = function() {
+		event.preventDefault();
+		document.adminMovieList.submit();
+	}
+</script>

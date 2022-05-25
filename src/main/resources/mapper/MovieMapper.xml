@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project2.movieproject.movieDetail.MovieMapper">
+	<select id="getDetail" resultType="MovieVO">
+		select * from MOVIE
+		where movie_koficCd = #{movie_koficCd}  
+	</select>
+	<select id="getList_ko" resultType="MovieVO">
+		select * from MOVIE
+		<choose>
+			<when test='genre == "action".toString()' >
+			where movie_gr = "액션" and movie_nt = "한국" 
+					order by movie_opendt desc
+			</when>
+			<when test='genre == "thriller".toString()' >
+			where movie_gr = "스릴러" and movie_nt = "한국" 
+					order by movie_opendt desc
+			</when>
+			<when test='genre == "drama".toString()' >
+			where movie_gr = "드라마" and movie_nt = "한국" 
+					order by movie_opendt desc
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getList_out" resultType="MovieVO">
+		select * from MOVIE
+		<choose>
+			<when test='genre == "action".toString()' >
+			where movie_gr = "액션" and movie_nt != "한국" 
+					order by movie_opendt desc
+			</when>
+			<when test='genre == "thriller".toString()' >
+			where movie_gr = "스릴러" and movie_nt != "한국" 
+					order by movie_opendt desc
+			</when>
+			<when test='genre == "drama".toString()' >
+			where movie_gr = "드라마" and movie_nt != "한국" 
+					order by movie_opendt desc
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="addStarRate" >
+		insert into STAR_RATE (user_id,
+							   movie_koficCd,
+							   sr_rate)
+		values(#{user_key},
+			   #{movie_koficCd},
+			   #{sr_rate})		
+	</insert>
+	
+	<select id="getStarRate" resultType="Float">
+	
+		select round(avg(sr_rate),1) 
+		from STAR_RATE 
+		where movie_koficCd=#{movie_koficCd};
+	
+	</select>
+	<select id="getMovieLike" resultType="MovieLikeVO">
+		select * from MOVIE_LIKE
+		where user_id=#{user_id} and
+		movie_koficCd=#{movie_koficCd} 
+	</select>
+	
+	<insert id="addMovieLike">
+		insert into MOVIE_LIKE values (#{user_id}, #{movie_koficCd})
+	</insert>
+	
+	<delete id="removeMovieLike">
+		delete from MOVIE_LIKE where user_id=#{user_id} and movie_koficCd=#{movie_koficCd}
+	</delete>
+	
+</mapper>

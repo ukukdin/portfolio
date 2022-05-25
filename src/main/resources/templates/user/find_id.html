@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+<script th:inline="javascript">
+	(function() {
+	var msg = JSON.parse('[[${msg}]]');
+	if (msg != null) {
+		alert(msg);
+		/* console.log(check_id); */
+		/* user_id.value = "${check_id}"; model에서 저장한 값을 JS에서 불러서 사용하는 방법이 뭘까? */
+	}
+	;
+})();
+window.close();
+</script>
+</html>

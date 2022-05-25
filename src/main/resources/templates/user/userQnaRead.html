@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" th:href="@{/css/userQnaRegist.css}" />
+<th:block th:replace="~{./include/layout :: setContent( ~{:: .userQnaRead} ) }">
+
+<div class="userQnaRead">
+    <div class="qnar_outbox">
+        <form action="">
+            <div class="qnar_title">
+                <span class="noselect">문의사항</span>
+            </div>
+
+            
+            <div class="qnar_rightbox">
+            <ul class="qnar_ul">
+                <li>
+                    <table class="qnar_board_basic_view">
+                        <tbody class="qnar_ttt" th:each="vo, state : ${myqa}">
+                            <tr class="qnar_tr">
+                                <th class="qnar_th"></th>
+                                <td><input type="text" class="inputw99p" name="id" th:value="${myqa.get(0).user_id}" readonly></td>
+                            </tr>
+                            <tr class="qnar_tr">
+                                <th class="qnar_th">제목</th>
+                                <td colspan="5">
+                                    <a><input type="text" class="inputw99p2" name="title" readonly th:value="${myqa.get(0).qa_title}"></a>
+
+                                </td>
+
+                            </tr>
+                            <tr class="qnar_tr">
+                                <th class="qnar_th">내용</th>
+                                <td colspan="5">
+                                    <div>
+                                        <textarea class="inputw99p1" style="height: 400px" readonly>[[${myqa.get(0).qa_content}]]</textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr class="qnar_tr">
+                                <th class="qnar_th">관리자 답변</th>
+                                <td colspan="5">
+                                    <div>
+                                        <textarea class="inputw99p1" style="height: 400px" readonly>[[${myqa.get(0).qa_comment}]]</textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </li>
+                </ul>
+            </div>
+    </form>
+    </div>
+</div>
+</th:block>

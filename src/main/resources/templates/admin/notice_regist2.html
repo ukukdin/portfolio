@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+       <link rel="stylesheet" th:href="@{/css/qnaNnotice.css}">
+</head>
+
+<body>
+    <div class="noticeRegist_outbox">
+        <form action="noticeRegist" name="noticeRegist" method="post" enctype="multipart/form-data">
+        <div class="title"> 
+          <span class="noselect">공지사항</span>
+       </div>
+           
+ 
+        <div class="rightbox1"> <li>
+            <table cellpadding="0" cellspacing="0" class="board_basic_view" width="100%">
+                <tbody class="ttt">
+                    
+                    <tr>
+                        <th>작성자</th>
+                        <td><input type="text" class=" inputw99p" name="admin_id" value="admin"readonly></td>
+                    </tr>
+                    <tr>
+                        <th>제목</th>
+                        <td colspan="5">
+                            <input type="text" class="inputw99p2" name="notices_title" >
+
+                        </td>
+							
+                    </tr>
+                    <tr>
+                        <th>내용</th>
+                        <td colspan="5">
+                            <div>
+                                <textarea name="notices_content" class="inputw99p1" style="height: 400px"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                    <th>첨부파일</th>
+                 	
+                    <td>
+	                   <input name="file" type="file" class="file_class" >
+                   </td>
+                   </tr>
+                 
+                </tbody>
+
+               </table>
+               
+            </li>
+            <div class="notice_regist_btn1">
+               <input type="submit" class="submit"  value="등록">
+    
+            
+            </div>
+           
+            
+        </div>
+               
+         
+               
+               
+               
+       
+</form>
+    </div>
+    </body>
+
+
+
+</html>

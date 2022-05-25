@@ -1,0 +1,177 @@
+CREATE TABLE MOVIE (
+    MOVIE_KOFICCD VARCHAR(15) NOT NULL, ##영진위KEY
+    MOVIE_TMDBCD VARCHAR(15) NOT NULL, ##TMDBKEY
+    MOVIE_NM VARCHAR(50) NOT NULL, ##영화이름(한글)
+    MOVIE_NMEN VARCHAR(50) NOT NULL, ##영화이름(영어)
+    MOVIE_NMOR VARCHAR(50) NOT NULL, ##영화이름(원문)
+    MOVIE_VURL VARCHAR(100), ##동영상URL
+    MOVIE_IURL VARCHAR(100) NOT NULL, ##이미지URL
+    MOVIE_AGE VARCHAR(50) NOT NULL, ##나이등급
+    MOVIE_DIRNM VARCHAR(50) NOT NULL, ##감독이름(한글)
+    MOVIE_DIRNMEN VARCHAR(50) NOT NULL, ##감독이름(영어)
+    MOVIE_ACTNM VARCHAR(300) NOT NULL, ##배우이름(한글)
+    MOVIE_ACTNMEN VARCHAR(300) NOT NULL, ##배우이름(영어)
+    MOVIE_GR VARCHAR(30) NOT NULL, ##영화장르
+    MOVIE_NT VARCHAR(10) NOT NULL, ##제작국가
+    MOVIE_OPENDT VARCHAR(10) NOT NULL, ##개봉일
+    MOVIE_TYPENM VARCHAR(10) NOT NULL, ##영화유형
+<<<<<<< HEAD
+<<<<<<< HEAD
+    MOVIE_APIRT VARCHAR(5) NOT NULL, ##api평점
+=======
+>>>>>>> 3a11184b2369183a6ca572bd53f09a4a47996bb5
+=======
+>>>>>>> 13afea391c59459e24f216ee29cb0800a79dfc66
+    MOVIE_TIME VARCHAR(10) NOT NULL,  ##상영시간
+    MOVIE_OV VARCHAR(1000) NOT NULL, ##영화소개
+    MOVIE_SITERT INT, ##사이트평점
+    MOVIE_SELLPRICE INT, ##판매가격
+    MOVIE_RENTPRICE INT, ##대여가격
+    MOVIE_VIEWS INT, ## 조회수
+<<<<<<< HEAD
+<<<<<<< HEAD
+    MOVIE_LIKE INT, ## 좋아요수
+    MOVIE_DISLIKE INT, ## 싫어요수
+=======
+    MOVIE_LIKE INT, ## 관심수
+>>>>>>> 3a11184b2369183a6ca572bd53f09a4a47996bb5
+=======
+    MOVIE_LIKE INT, ## 관심수
+>>>>>>> 13afea391c59459e24f216ee29cb0800a79dfc66
+    MOVIE_RECOMMEND INT, ## 추천수 
+    PRIMARY KEY(MOVIE_KOFICCD, MOVIE_TMDBCD)
+);
+
+CREATE TABLE USER (
+<<<<<<< HEAD
+<<<<<<< HEAD
+	user_key 	INT	PRIMARY KEY AUTO_INCREMENT,
+	user_id		VARCHAR(20)	NOT NULL,
+	user_gender	INT	NOT NULL,
+	user_birth	DATE NOT NULL,
+=======
+	user_id		VARCHAR(20)	NOT NULL,
+	user_gender	INT	NOT NULL,
+	user_birth	VARCHAR(20) NOT NULL,
+>>>>>>> 13afea391c59459e24f216ee29cb0800a79dfc66
+	user_email	VARCHAR(50)	NOT NULL,
+	user_auth	BOOLEAN	DEFAULT FALSE,
+	user_date	TIMESTAMP DEFAULT NOW(),
+	user_admin	BOOLEAN	DEFAULT FALSE,
+<<<<<<< HEAD
+    user_name	VARCHAR(10) NOT NULL
+);
+
+
+=======
+   user_key    INT   PRIMARY KEY AUTO_INCREMENT,
+   user_id      VARCHAR(20)   NOT NULL,
+   user_gender   INT   NOT NULL,
+   user_birth   VARCHAR(20) NOT NULL,
+   user_email   VARCHAR(50)   NOT NULL,
+   user_auth   BOOLEAN   DEFAULT FALSE,
+   user_date   TIMESTAMP DEFAULT NOW(),
+   user_admin   BOOLEAN   DEFAULT FALSE,
+   user_name   VARCHAR(10) NOT NULL,
+   user_phone  VARCHAR(15) NOT NULL,
+   user_password VARCHAR(20) NOT NULL
+);
+
+>>>>>>> 3a11184b2369183a6ca572bd53f09a4a47996bb5
+CREATE TABLE QA (
+	qa_key		INT	PRIMARY KEY AUTO_INCREMENT,
+	user_key	INT	NOT NULL, ##FK
+	qa_title	VARCHAR(20)	NOT NULL,
+	qa_content	VARCHAR(5000)	NOT NULL,
+	qa_date		TIMESTAMP DEFAULT NOW()
+=======
+    user_name	VARCHAR(10) NOT NULL,
+    user_phone  VARCHAR(15) NOT NULL,
+    user_password VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE QA (
+	qa_key		INT	PRIMARY KEY AUTO_INCREMENT,
+	user_id		VARCHAR(20)	NOT NULL, ##FK
+	qa_title	VARCHAR(20)	NOT NULL,
+	qa_content	VARCHAR(5000)	NOT NULL,
+	qa_date		TIMESTAMP DEFAULT NOW()
+	FOREIGN KEY(user_id)
+	REFERENCES USER(user_id)
+>>>>>>> 13afea391c59459e24f216ee29cb0800a79dfc66
+);
+
+CREATE TABLE QA_COMMENT (
+	qa_key	INT	PRIMARY KEY AUTO_INCREMENT,
+<<<<<<< HEAD
+	user_key	INT NOT NULL, ##FK
+=======
+	user_id		VARCHAR(20)	NOT NULL, ##FK
+>>>>>>> 13afea391c59459e24f216ee29cb0800a79dfc66
+	qa_comment	VARCHAR(5000)	NOT NULL
+);
+
+CREATE TABLE ADMIN_NOTICES(
+ADMIN_KEY INT PRIMARY KEY AUTO_INCREMENT,
+NOTICES_TITLE VARCHAR(20) NOT NULL,
+NOTICES_DATE TIMESTAMP DEFAULT NOW(),
+USER_ADMIN BOOLEAN DEFAULT FALSE,
+NOTICES_COUNT INT NOT NULL,
+NOTICES_CONTENT VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE PRODUCT_UPLOAD(
+   UPLOAD_NO INT PRIMARY KEY AUTO_INCREMENT, # PK
+    FILENAME VARCHAR(100) NOT NULL, #실제 파일명
+    FILEPATH VARCHAR(100) NOT NULL, #220407형태의 폴더명
+    UUID VARCHAR(50) NOT NULL,       #파일이름앞에 들어가는 랜덤값
+    REGDATE TIMESTAMP DEFAULT NOW(),
+   USER_ID INT, ## FK
+    USER_ADMIN VARCHAR(20) ##FK(편의성을 위한 FK)
+);
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+ CREATE TABLE `comment` (
+=======
+CREATE TABLE `comment` (
+>>>>>>> 3a11184b2369183a6ca572bd53f09a4a47996bb5
+=======
+CREATE TABLE `comment` (
+>>>>>>> 13afea391c59459e24f216ee29cb0800a79dfc66
+  `comment_key` int NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(20) DEFAULT NULL,
+  `comment_com` varchar(300) NOT NULL,
+  `comment_rank` int NOT NULL,
+<<<<<<< HEAD
+<<<<<<< HEAD
+  `comment_date` timestamp NOT NULL,
+=======
+  `comment_date` date DEFAULT NULL,
+>>>>>>> 3a11184b2369183a6ca572bd53f09a4a47996bb5
+=======
+  `comment_date` date DEFAULT NULL,
+>>>>>>> 13afea391c59459e24f216ee29cb0800a79dfc66
+  `comment_class` int NOT NULL,
+  `comment_group` int NOT NULL,
+  `comment_sort` int NOT NULL,
+  `comment_like` int NOT NULL,
+  `comment_unlike` int NOT NULL,
+<<<<<<< HEAD
+<<<<<<< HEAD
+  `comment_mn` int NOT NULL,
+  PRIMARY KEY (`comment_key`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+=======
+  PRIMARY KEY (`comment_key`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+ );
+>>>>>>> 3a11184b2369183a6ca572bd53f09a4a47996bb5
+=======
+  PRIMARY KEY (`comment_key`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+ );
+>>>>>>> 13afea391c59459e24f216ee29cb0800a79dfc66

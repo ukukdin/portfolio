@@ -1,0 +1,239 @@
+body .bd {
+    margin: 20px 30px 0;
+    padding: 0;
+}
+body, html {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #333;
+    font-size: 16px;
+    direction: ltr;
+}
+.responsive-account-container {
+    display: block;
+    width: 90%;
+    font-size: 1em;
+    min-width: 300px;
+    min-height: 400px;
+    position: relative;
+    color: #333;
+    -webkit-tap-highlight-color: transparent;
+    margin: 0 auto;
+    overflow-wrap: anywhere;
+}
+form {
+    display: block;
+    margin-top: 0em;
+}
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+ul.structural {
+    padding: 0;
+    margin: 0;
+}
+.nfFormSpace:first-child {
+    margin-bottom: 3%;
+}
+ul.structural>li {
+    list-style: none;
+    margin-left: 0;
+}
+.nfFormSpace {
+    margin-bottom: 3%;
+}
+.responsive-account-container * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+ul>li {
+    margin-left: 1.1em;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.nfInput {
+    max-width: 500px;
+    position: relative;
+}
+.change-password-buttons {
+    margin-top: 2.25em;
+}
+.change-password-buttons .nf-btn {
+    margin: 0 10px 0 0;
+}
+.change-password-buttons .nf-btn {
+    margin: 10px 0;
+}
+.nf-btn.nf-btn-small {
+    display: inline-block;
+    font-size: 13px;
+    padding: 0.75rem 17.33333333px;
+    min-width: 98px;
+    min-height: 37px;
+    margin-right: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: auto;
+    line-height: 1rem;
+}
+.nf-btn.nf-btn-small {
+    display: inline-block;
+    padding: 0;
+    line-height: 50px;
+}
+.nf-btn-retro.nf-btn-primary {
+    background-color: #0f84fa;
+    color: #fff;
+    padding: 1px 2rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+.nf-btn {
+    width: auto;
+}
+.nf-btn {
+    position: relative;
+    font-size: 1rem;
+    padding: 0.75rem 1.33333333rem;
+    min-width: 74px;
+    min-height: 48px;
+    width: 100%;
+}
+.nf-btn-retro {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+}
+.nf-btn {
+    display: inline-block;
+    text-decoration: none;
+    line-height: 1rem;
+    vertical-align: middle;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: .025rem;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: none;
+    position: relative;
+    min-height: 48px;
+    -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 25%);
+    -moz-box-shadow: 0 1px 1px rgba(0,0,0,.25);
+    box-shadow: 0 1px 1px rgb(0 0 0 / 25%);
+    color: #000;
+}
+.responsive-account-container * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+button, html input[type=button], input[type=reset], input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+button, select {
+    text-transform: none;
+}
+button {
+    overflow: visible;
+}
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+button, html input[type=button], input[type=reset], input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+button, select {
+    text-transform: none;
+}
+button {
+    overflow: visible;
+}
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+button {
+    appearance: auto;
+    writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: -internal-light-dark(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    box-sizing: border-box;
+    background-color: -internal-light-dark(rgb(239, 239, 239), rgb(59, 59, 59));
+    margin: 0em;
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-image: initial;
+}
+.nfInput .nfInputPlacement {
+    position: relative;
+}
+.nfInput .placeLabel {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    color: #8c8c8c;
+    font-size: 14px;
+    -webkit-transition: font .1s ease,top .1s ease,-webkit-transform .1s ease;
+    transition: font .1s ease,top .1s ease,-webkit-transform .1s ease;
+    -o-transition: font .1s ease,top .1s ease,-o-transform .1s ease;
+    -moz-transition: font .1s ease,top .1s ease,transform .1s ease,-moz-transform .1s ease;
+    transition: font .1s ease,top .1s ease,transform .1s ease;
+    transition: font .1s ease,top .1s ease,transform .1s ease,-webkit-transform .1s ease,-moz-transform .1s ease,-o-transform .1s ease;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.nfInput .nfTextField {
+    height: 48px;
+    padding: 10px 10px 0;
+    width: 100%;
+}

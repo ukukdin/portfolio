@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org">
+		<link rel="stylesheet" th:href="@{/css/qnaNnotice.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/practice.css}" />
+     	<link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+
+
+
+<th:block th:replace="~{./include/layout :: setContent(~{:: .notice_outbox})}">
+		
+
+
+
+
+	<div class="notice_outbox">
+		<form action="notices" name="noticed" method="get">
+
+
+
+
+
+			<section>
+				<div class="title">
+					<span class="noselect">공지 사항</span>
+				</div>
+
+
+				<th:block
+					th:replace="~{./include/layout2 :: setContent(~{:: .leftbox})}" 
+					 th:if="${vo.user_admin} == true">
+
+
+					<div class="leftbox" ></div>
+				</th:block>
+
+				<div class="rightbox">
+					<div id="board-search">
+						<div class="search-window">
+
+							<div class="search-wrap">
+								<input type="submit" class="btn btn-default" id="searchBtn">
+								<input type="text" class="glyphicon glyphicon-search"
+									name="searchName" placeholder="검색어를 입력해주세요"
+									th:value="${pageVO.cri.searchName}"> <select
+									class="sele" name="searchType">
+									<option value="all"
+										th:selected="${pageVO.cri.searchType } =='all' ? 'selected'">전체</option>
+									<option value="title"
+										th:selected="${pageVO.cri.searchType} =='title' ? 'selected'">제목</option>
+									<option value="content"
+										th:selected="${pageVO.cri.searchType} == 'content' ? 'selected' ">내용</option>
+
+								</select> <input type="hidden" name="page" th:value="1"> <input
+									type="hidden" name="amount" th:value="${pageVO.amount}">
+								<!-- <input type="hidden" name="searchType" th:value="${pageVO.cri.searchType}">
+							<input type="hidden" name="searchName" th:value="${pageVO.cri.searchName}"> -->
+
+								<select class="sele2" th:onchange="|admin_dataHandler(this)|">
+									<option value="10"
+										th:selected="${pageVO.amount}==10 ? 'selected'">10개
+										보기</option>
+									<option value="20"
+										th:selected="${pageVO.amount}==20 ? 'selected'">20개
+										보기</option>
+									<option value="50 "
+										th:selected="${pageVO.amount}==50 ? 'selected'">50개
+										보기</option>
+									<option value="100 "
+										th:selected="${pageVO.amount}==100 ? 'selected'">100개
+										보기</option>
+
+								</select> <label for="search" class="bline"></label>
+
+
+
+
+
+							</div>
+
+						</div>
+					</div>
+
+
+					<table class="board-table">
+						<colgroup>
+							<col style="width: 5%">
+							<col style="width: 10%">
+							<col style="width: 35%">
+							<col style="width: 25%">
+							<col style="width: 10%">
+							<col style="width: 15%">
+
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col">No.</th>
+								<th scope="col">관리자</th>
+								<th scope="col">제목</th>
+
+								<th scope="col">등록일</th>
+								<th scope="col">조회수</th>
+								<th scope="col">첨부 파일</th>
+							</tr>
+
+
+						</thead>
+						<tbody>
+							<tr th:each="vo,state: ${list}" readonly>
+
+								<td>[[${vo.admin_key}]]</td>
+
+								<td><a
+									th:href="@{/admin/notice_regist(admin_key=${vo.admin_key})}">관리자</a></td>
+								<td >[[${vo.notices_title}]]</td>
+
+
+								<td>[[${#temporals.format(vo.notices_date,'yyyy-MM-dd')}]]</td>
+
+								<td>[[${vo.notices_count}]]</td>
+
+
+
+								 <td th:if="${vo.filename} != null and ${vo.filename} != '' "><a
+									th:href="@{/download( filename=${vo.filename}, FILEPATH= ${vo.FILEPATH}, uuid= ${vo.uuid}  )}">
+										<img th:src="@{/img/down.png}" style="height: 25px"></img>
+								</a></td>
+
+								<td th:unless="${vo.filename} != null and ${vo.filename} != '' ">#</td> 
+
+
+
+
+							</tr>
+
+
+
+						</tbody>
+
+
+
+					</table>
+
+					<div class="noticeQna_page3">
+						<a href="notice_regist2" title="Button fade lightblue"
+							class="button btnFade btnLightBlue" th:if="${vo.user_admin} == true">등록</a>
+	
+
+						<ul class="pagenation">
+
+							<th:block th:if="${pageVO.realEnd != 0}">
+								<li><a
+									th:href="@{/admin/notices(page=1, 
+													amount=${pageVO.amount},
+													
+													searchType=${pageVO.cri.searchType},
+													searchName=${pageVO.cri.searchName})}">
+
+										<i class="fa fa-angle-double-left" aria-hidden="true"> <<
+									</i>
+								</a></li>
+							</th:block>
+
+
+
+							<th:block th:if="${pageVO.prev}">
+								<li style="margin-right: 5px;"><a
+									th:href="@{/admin/notices(page=${pageVO.start - 1 },
+													amount=${pageVO.amount},
+													searchType=${pageVO.cri.searchType},
+													searchName=${pageVO.cri.searchName} )}">
+										<i class="fa fa-angle-left" aria-hidden="true"> < </i>
+								</a></li>
+							</th:block>
+
+							<th:block th:each="page: ${pageVO.pageList}">
+								<li th:class="${pageVO.page == page? 'on' :''}"><a
+									th:href="@{/admin/notices(page=${page}, 
+													amount=${pageVO.amount}, 
+													searchType=${pageVO.cri.searchType},
+												     searchName=${pageVO.cri.searchName})}">[[${page}]]
+								</a></li>
+							</th:block>
+
+							<th:block th:if="${pageVO.next}">
+								<li style="margin-left: 5px;"><a
+									th:href="@{/admin/notices(page=${pageVO.end + 1},
+															amount=${pageVO.amount},
+															searchType=${pageVO.cri.searchType},
+															searchName=${pageVO.cri.searchName} )}">
+										<i class="fa fa-angle-right" aria-hidden="true">></i>
+								</a></li>
+
+							</th:block>
+							<th:block th:if="${pageVO.realEnd != 0}">
+								<li><a
+									th:href="@{/admin/notices(page=${pageVO.realEnd},
+															amount=${pageVO.amount},
+															searchType=${pageVO.cri.searchType},
+															searchName=${pageVO.cri.searchName}
+															 )}">
+										<i class="fa fa-angle-double-right" aria-hidden="true">>></i>
+								</a></li>
+							</th:block>
+
+						</ul>
+					</div>
+			</section>
+	</div>
+
+	</div>
+
+	</form>
+
+
+</th:block>
+<script th:src="@{/js/modal.js}"></script>
+
+<script th:inline="javascript">
+	(function() {
+		var msg = JSON.parse('[[${msg}]]');
+		if (msg != null) {
+			alert(msg);
+		}
+	})();
+	function admin_dataHandler(a) {
+		/* 		document.notices.page.value = 1;
+		 document.notices.amount.value = a.value;
+		 document.notices.submit(); */
+
+		location.href = '/admin/notices?page=1&amount=' + a.value;
+	}
+
+	var searchBtn = document.getElementById("searchBtn");
+	searchBtn.onclick = function() {
+
+		event.preventDefault();
+
+		document.noticed.submit();
+	console.log(vo.filename);
+	}
+</script>
+</html>

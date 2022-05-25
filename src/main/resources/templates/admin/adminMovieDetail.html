@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{./include/layout :: setContent(~{:: .adminMovieDetail})}">
+<div class="adminMovieDetail">
+	<form name="update" action="#" method="post">
+		<h2>영화 정보</h2>
+		<table cellpadding="0" cellspacing="0" border="1">
+			<tbody>
+				<colgroup>
+					<col style="width:10%">
+				</colgroup>
+				<tr>
+					<th>동영상</th>
+					<td th:if="${movievo.movie_vUrl} != null and ${movievo.movie_vUrl} != ''"><input type="text" name="movie_vUrl" th:value="${movievo.movie_vUrl}" style="width:500px"></td>
+					<td th:unless="${movievo.movie_vUrl} != null and ${movievo.movie_vUrl} != ''"><input type="text" name="movie_vUrl" style="width:500px"></td>
+				</tr>
+				<tr>
+					<th>구매가격</th>
+					<td th:if="${movievo.movie_sellPrice} != 0 and ${movievo.movie_sellPrice} != ''"><input type="text" name="movie_sellPrice" th:value="${movievo.movie_sellPrice}" style="width:500px">원</td>
+					<td th:unless="${movievo.movie_sellPrice} != 0 and ${movievo.movie_sellPrice} != ''"><input type="text" name="movie_sellPrice" style="width:500px">원</td>
+				</tr>
+				<tr>
+					<th>대여가격</th>
+					<td th:if="${movievo.movie_rentPrice} != null and ${movievo.movie_rentPrice} != ''"><input type="text" name="movie_rentPrice" th:value="${movievo.movie_rentPrice}" style="width:500px">원</td>
+					<td th:unless="${movievo.movie_rentPrice} != null and ${movievo.movie_rentPrice} != ''"><input type="text" name="movie_rentPrice" style="width:500px">원</td>
+				</tr>
+				<tr>
+					<th>이미지</th>
+					<td><img th:src="'https://image.tmdb.org/t/p/w185' + ${movievo.movie_iUrl}"></td>
+				</tr>
+				<tr>
+					<th>영진위코드</th>
+					<td>[[${movievo.movie_koficCd}]]</td>
+				</tr>
+				<tr>
+					<th>TMDB코드</th>
+					<td>[[${movievo.movie_tmdbCd}]]</td>
+				</tr>
+				<tr>
+					<th>영화이름(한글)</th>
+					<td>[[${movievo.movie_nm}]]</td>
+				</tr>
+				<tr>
+					<th>영화이름(영문)</th>
+					<td>[[${movievo.movie_nmEn}]]</td>
+				</tr>
+				<tr>
+					<th>영화등급</th>
+					<td>[[${movievo.movie_age}]]</td>
+				</tr>
+				<tr>
+					<th>감독이름(한글)</th>
+					<td>[[${movievo.movie_dirNm}]]</td>
+				</tr>
+				<tr>
+					<th>개봉일</th>
+					<td>[[${movievo.movie_openDt}]]</td>
+				</tr>
+				<tr>
+					<th>배우이름(한글)</th>
+					<td>[[${movievo.movie_actNm}]]</td>
+				</tr>	
+				<tr>
+					<th>영화장르</th>
+					<td>[[${movievo.movie_gr}]]</td>
+				</tr>
+				<tr>
+					<th>제작국가</th>
+					<td>[[${movievo.movie_nt}]]</td>
+				</tr>
+				<tr>
+					<th>명대사</th>
+					<td>[[${movievo.movie_tagLine}]]</td>
+				</tr>
+				<tr>
+					<th>영화소개</th>
+					<td>[[${movievo.movie_ov}]]</td>
+				</tr>
+			</tbody>
+		</table>
+		<a class="update" th:onclick="|movie_update()|">update</a>
+	</form>
+</div>
+</th:block>
+
+<script th:inline="javascript">
+	function movie_update() {
+		
+		document.update.action = "movieUpdate";
+		document.update.submit();
+	}
+</script>

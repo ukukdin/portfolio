@@ -1,0 +1,239 @@
+/**/
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+a { 
+    text-decoration:none;
+    color: #000;
+} 
+li { list-style: none }
+html,
+body{
+    display:block;
+    position: relative;
+    text-decoration:none;
+    width:1130px;
+    height: auto;
+    margin: 0 auto ;
+    background-color: #fff;
+    font-size: 16px;
+    font-weight: 300;
+    font-family: 'Nanum Gothic', sans-serif;
+    color: #000;
+}
+
+/**/
+.mySlideDiv {
+	display: none;
+}
+.active {
+	display: block;
+}
+.main_banner {
+    width: 1130px;
+    height: 600px;
+    position: relative;
+    margin: auto;
+    background-color: black;
+}
+.main_banner div a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}  
+.main_banner .active a img{
+	height:600px;
+}
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+@-webkit-keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+}
+@keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+}
+.main_prev, .main_next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;	
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+}
+.main_next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+.main_prev:hover, .main_next:hover {
+    background-color: white;
+    color: black;
+}
+
+/**/
+.main_notices{
+	background-color:#fff; 
+	border:1px solid #ededed; 
+	margin-top:10px; 
+	padding-bottom: 10px;
+}
+
+/**/
+.rank_section{
+    display:block;
+    width:70%;
+    max-height: 500px;
+    float:left;
+    background-color: #fff;
+    margin-bottom:50px;
+}
+.rank_section span:hover{
+    text-decoration:none;
+}
+.rank_section img{
+    transition: transform 0.5s, opacity 0.5s;
+}
+.rank_section img:hover{
+    opacity:0.7;
+    transform: scale(1.1);
+}
+.rank_theme{
+    margin-top:20px;
+}
+.rank_theme_title{
+    display:block;
+    float:left;
+    margin-left:8px;
+    margin-bottom:15px;
+}
+.rank_theme_menu{
+    margin-left:15px;
+}
+.rank_theme_menu img { 
+    border: none; margin: 0; padding: 0; display: inline; 
+    margin-right:-6px;
+}
+.rank_theme_menu_list {
+    background-color: #fbfbfc;
+    border-color: #e3e3e3;
+    border-width: 1px 0px 1px 0px;
+    border-style: solid;
+    font-size: 0;
+    line-height: 0;
+}
+.rank_theme_menu_list li {
+    display: inline-block;
+    min-width: 16.66%;
+    position: relative;
+    vertical-align: top;
+}
+.rank_theme_menu_list_sub {
+    display: block;
+    padding: 13px 0 15px 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #6a6a6a;
+    text-align: center;
+    line-height: 19px;
+    text-decoration: none;
+}
+.rank_theme_menu_list_sub2 {
+    display: block;
+    padding: 8.35px 0 8.35px 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #6a6a6a;
+    line-height: 19px;
+    text-decoration: none;
+}
+.rank_theme_movie_list{
+    border-bottom: 1px solid #dae1e6;
+    padding-bottom:15px;
+    margin-bottom:15px;
+}
+.rank_theme_movie_list ul{
+    list-style:none;
+}
+.rank_theme_movie_list ul li{
+    float: left;
+}
+.rank_theme_movie_list_img{
+    margin-top:15px;
+    line-height: 20px;
+    width:100%;
+    font-size:18px;
+    display: block;
+    float: center;
+}
+
+/**/
+.rank_section2{
+    display:block;
+    width:30%;
+    max-height: 400px;
+    float:left;
+    background-color: #fff;
+    margin-top:20px;
+}
+.rank_movie{
+    margin-top:10px;
+}
+.rank_movie_title{
+    margin-left:15px;
+}
+.rank_movie_list {
+    background-color: #fbfbfc;
+    border-color: #e3e3e3;
+    border-width: 1px 0px 1px 0px;
+    border-style: solid;
+    font-size: 0;
+    line-height: 0;
+}
+.rank_movie_list li {
+    display: inline-block;
+    min-width: 100%;
+    position: relative;
+    vertical-align: top;
+}
+.rank_movie_list_sub {
+    display: block;
+    padding: 5px 5px 5px 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #6a6a6a;
+    text-align: left;
+    line-height: 19px;
+    text-decoration: none;
+}
+
+.select {
+  background-color : #1DA1F2;
+}
+.nation_movie_list, .rent_nation_movie_list{
+    display: none;
+}
+.genre_movie_list, .rent_genre_movie_list{
+    display: none;
+}
+.nation_movie_rank{
+    display: none;
+}
+.genre_movie_rank{
+    display: none;
+}
+.view {
+    display:block;
+    animation: tabAnimation ease-in-out 0.5s;
+}

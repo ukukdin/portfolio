@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+.adminMovie_movieSearch_title {
+	height:70px; 
+	line-height:70px; 
+	background-color:#263238; 
+	color:#fff; 
+	font-weight:bold; 
+	font-size:24px; 
+	text-indent:20px;
+}
+.adminMovie_movieSearch, .adminMovie_movieAmount {
+	height:30px; 
+	border:1px solid #d5d5d5; 
+	margin-right:4px;
+}
+.adminMovie_movieSearch_showtoggle{
+	top:18px; 
+	right:20px; 
+	cursor:pointer;
+}
+.adminMovie_plus{
+	background-image:url(../img/plus.png); 
+	width:15px; 
+	height:15px; 
+	display: inline-block;
+}
+.adminMovie_minus{
+	background-image:url(../img/minus.png); 
+	width:15px; 
+	height:15px; 
+	display: inline-block;
+}
+.adminMovie_movieSearch_content {
+	width: 200px;
+	height:30px; 
+	border:1px solid #d5d5d5; 
+	margin-right:4px;
+}
+.adminMovie_movieSearch_btn {
+	font-size: 12px; 
+	padding: 0 10px; 
+	border: none; 
+	background-color: #858585; 
+	color: #fff; 
+	height: 30px; 
+	line-height: 30px; 
+	display:inline-block;
+}
+.adminMovie_movieList {
+	width:100%; 
+	border-left:1px solid #ededed;  
+	border-top:1px solid #4588fd;
+}
+
+.adminMovie_movieList tr th {
+	text-align:center; 
+	background-color: #edf0f5; 
+	text-align: center; 
+	border-bottom: 1px solid #fff; 
+	border-right: 1px solid #ededed; 
+	height: 45px; 
+	line-height: 45px; 
+	min-width:7%; 
+	width:7%;
+}
+
+.adminMovie_movieList tr td {
+	text-align:center; 
+	border-bottom: 1px solid #ededed; 
+	text-align: center; 
+	line-height: 45px; 
+	height: 45px;text-decoration: none;
+}
+.adminMovie_movieList tr td a {
+	text-decoration: none;
+	color: #4588fd;
+}
+
+.adminMovie_moviePage{
+	padding:30px 0 20px 0;
+	position:relative;
+}
+.adminMovie_moviePage ul{
+	text-align:center;
+}
+.adminMovie_moviePage ul li{
+	display:inline;  
+	padding:0px!important;
+}
+.adminMovie_moviePage ul li a{
+	display:inline-block; 
+	zoom:1;
+	*display:inline; 
+	width: 35px; 
+	height: 35px; 
+	line-height: 35px; 
+	color:#777777; 
+	border:1px solid #dddddd;
+	transition:all 0.25s ease-in-out;
+	-webkit-transition:all 0.25s ease-in-out;
+	font-size:15px;
+}
+.adminMovie_moviePage ul li a:hover, .page ul li.on a{
+	display:inline-block;
+	zoom:1;
+	*display:inline; 
+	border:1px solid #7866c9;
+	background:#fff;
+	color:#7866c9;}
+.adminMovie_moviePage ul li a i{
+	color:#777777;
+}
+.adminMovie_moviePage ul li a:hover i{
+	color:#7866c9;
+}
+
+.adminMovie_registBtn {
+	position: absolute; 
+	right: 0px;
+	font-size: 12px; 
+	padding: 0 10px; 
+	border: none; 
+	background-color: #858585; 
+	color: #fff; 
+	height: 30px; 
+	line-height: 30px; 
+	display:inline-block;
+	text-decoration: none;
+}

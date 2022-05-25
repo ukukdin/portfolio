@@ -1,0 +1,297 @@
+* {font-family: 'Noto Sans KR', sans-serif; text-decoration: none;}
+.outbox {
+    margin: 0 auto;
+    width: 1130px;
+    height: auto;
+    /* border: 1px solid black; */
+}
+.videobox {
+    width: 1130px;
+    height: 636px;
+    /* border: 1px solid black; */
+    margin-bottom: 15px;
+}
+.actor div, .actor p {
+	display: inline-block;
+}
+.summarybox {
+    width: 100%;
+    height: 90px;
+    /* border: 1px solid black; */
+    float: left;
+}
+.summary {
+    padding-top: 0px;
+    width: 820px;
+    height: 100%;
+    box-sizing: border-box;
+    /* border: 1px solid black; */
+    float: left;
+}
+.summary-top {
+	display:flex;
+    width: 100%;
+    height: 50px;
+    box-sizing: border-box;
+    /* border: 1px solid black; */
+    /* padding-top: 5px; */
+}
+.summary-bottom {
+   width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    font-size:small ;font-weight: 200; display: flex;
+    /* border: 1px solid black; */
+    /* padding-top: 5px; */
+}
+
+.summary-bottom div{  margin-left: 0px; margin-right: 0px;}
+.age {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: rgb(77, 201, 250);
+    color: white;
+    float: left;
+    font-size: 12px;
+    font-style: bold;
+    text-align: center;
+    line-height: 26px;
+    margin-left: 0;
+    margin-top: 5px;
+    margin-right: 5px;
+    /* padding-top: 5px; */
+}
+.md_title {
+   width: auto;
+    font-size: 26px;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    
+}
+.credit {
+    padding-top: 5px;
+    width: 310px;
+    height: 100%;
+    box-sizing: border-box;
+    /* border: 1px solid black; */
+    float: right;
+}
+.buy {
+    width: 150px;
+    height: 100%;
+    float: right;
+    /* border: 1px solid black; */
+}
+.buy button, .rent button {border: 0; outline: 0;}
+.buy button {
+    width: 100%;
+    height: 50px;
+    background-color: black;
+    color: white;
+    border-radius: 4px 4px;
+}
+.rent {
+    margin-right: 5px;
+    width: 150px;
+    height: 100%;
+    float: right;
+    /* border: 1px solid black; */
+}
+.rent button{
+    width: 100%;
+    height: 50px;
+    background-color: black;
+    color: white;
+    border-radius: 4px 4px;
+}
+.md_detailbox {
+    float: left;
+    margin: 0;
+    width: 100%;
+    height: auto;
+    /* border: 1px solid black; */
+}
+.md_detailtitle { margin: 0 ;font-size: 20px; font-weight: 400;}
+.md_tagline {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 99%;
+	float: right; 
+	font-size: 16px;
+	font-style: italic; 
+	font-weight:400;
+	}
+.md_detailcontents {
+    margin-top: 5px; 
+    white-space: pre-line;
+    width: 99%;
+    float: right;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.ratingbox{
+	width: 100%;
+	height: auto;
+	float: left;
+	margin-top: 10px;
+}
+.starRateBtn{
+	background-color: black;
+	width: 50px;
+	height:24px;
+	font-size: 12px;
+	color: white;
+	border-radius: 3px;
+}
+.ratingtitle {
+	width: 100%;
+	height: auto;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	font-size: 20px; 
+	font-weight: 400;
+	}
+
+#myform fieldset{
+    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    direction: rtl; /* 이모지 순서 반전 */
+    border: 0; /* 필드셋 테두리 제거 */
+    padding-left: 0;
+}
+#myform input[type=radio]{
+    display: none; /* 라디오박스 감춤 */
+}
+#myform label{
+    font-size: 15px; /* 이모지 크기 */
+    color: transparent; /* 기존 이모지 컬러 제거 */
+    text-shadow: 0 0 0 #d1d1d1; /* 새 이모지 색상 부여 */
+}
+#myform label:hover{
+    text-shadow: 0 0 0 #a00; /* 마우스 호버 */
+}
+#myform label:hover ~ label{
+    text-shadow: 0 0 0 #a00; /* 마우스 호버 뒤에오는 이모지들 */
+}
+#myform input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 #a00; /* 마우스 클릭 체크 */
+}
+
+:root {
+    --star-color: #d1d1d1;
+    --star-background: #a00;
+}
+
+.Stars {
+	--percent: calc(var(--rating) / 10 * 100%);
+	display: inline-block;
+	font-size: 12px;
+	font-family: Times;
+	line-height: 20px;
+}
+.Stars::before {
+	content: "⭐⭐⭐⭐⭐";
+	letter-spacing: 3px;
+	background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	}
+.movieLike{ 
+	margin-left: 15px;
+	margin-top: 5px;
+	}
+.md_make_heart {
+	line-height:15px;
+	border: 0px;
+	padding: 0px;
+    width: 15px;
+    height: 15px;
+    background: #a00;
+    position: relative; /*부모*/
+    transform: rotate(225deg);
+}
+.md_make_heart:before, .md_make_heart:after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    position: absolute; /*자식*/
+    border-radius: 50%; /*둥글게*/
+    background: #a00;
+}
+.md_make_heart:before {
+	left: 0%; 
+}
+.md_make_heart:after {
+	top: 0%;
+}
+.gr_make_heart {
+	line-height:15px;
+	border: 0px;
+	padding: 0px;
+    width: 15px;
+    height: 15px;
+    background: #d1d1d1;
+    position: relative; /*부모*/
+    transform: rotate(225deg);
+}
+.gr_make_heart:before, .gr_make_heart:after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    position: absolute; /*자식*/
+    border-radius: 50%; /*둥글게*/
+    background: #d1d1d1;
+}
+.gr_make_heart:before {
+	left: 0%; 
+}
+.gr_make_heart:after {
+	top: 0%;
+}
+
+.checkLogin {
+	width: 1130px;
+	height: 100px;
+	text-align: center;
+	line-height: 100px;
+	font-size: 13px;
+	color: #A1A1A1;
+}
+
+.commentwrite {
+    float: left;
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+.commenttitle {
+	width : 100%;
+    float: left;
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    width: 15%;
+}
+.commentwrite textarea {
+    width: 100%;
+    height : auto;
+    float: left;
+    resize: none;
+    margin-bottom: 5px;
+}
+.commentwrite button {
+    display: block;
+    width: 150px;
+    height: 50px;
+    float: right;
+    margin: 0;
+    right: 0;
+    border: 0;
+    outline: 0;
+    background-color: black;
+    color: white;
+    border-radius: 4px 4px;
+}

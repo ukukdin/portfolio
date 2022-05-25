@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/userPopup.css">
+</head>
+
+<body>
+    <div class="bd">
+        <div class="responsive-account-container">
+            <form class="change-password-form" data-uia="change-password-form" method="post" novalidate="" action="user_update_birth" name="user_update_birth">
+                <h1>생년월일 변경</h1>
+                <small>기존 생년월일</small>
+                <ul class="simpleForm structural ui-grid">
+                    <li data-uia="field-currentPassword+wrapper" class="nfFormSpace">
+                        <div data-uia="field-currentPassword+container" class="nfInput">
+                            <div class="nfInputPlacement">
+                            	<label class="input_id">
+                            		<input
+                                        type="date" data-uia="field-currentPassword" name="user_birth"
+                                        class="nfTextField" id="id_currentPassword" value="" tabindex="0"
+                                        autocomplete="off">
+                                 </label>
+                             </div>
+                         </div>
+                            <div id="" class="inputCaption" data-uia="">
+                        </div>
+                    </li>
+                    
+                <small>새로운 생년월일</small>
+                    <li data-uia="field-newPassword+wrapper" class="nfFormSpace">
+                        <div data-uia="field-newPassword+container" class="nfInput">
+                            <div class="nfInputPlacement">
+                            	<label class="input_id">
+                            		<input
+                                        type="date" data-uia="field-newPassword" name="user_newbirth"
+                                        class="nfTextField" id="new_birth" value="" tabindex="0" autocomplete="off">
+                                </label>
+                            </div>
+                        </div>
+                    </li>
+                    
+                <small>새로운 생년월일 확인</small>
+                    <li data-uia="field-confirmNewPassword+wrapper" class="nfFormSpace">
+                        <div data-uia="field-confirmNewPassword+container" class="nfInput">
+                            <div class="nfInputPlacement">
+                            	<label class="input_id">
+                            		<input type="date"
+                                        data-uia="field-confirmNewPassword" name="confirmNewPassword"
+                                        class="nfTextField" id="new_birthchk" value="" tabindex="0"
+                                        autocomplete="off">
+                                </label>
+                            </div>
+                        </div>
+                    </li>
+                    <li data-uia="field-requireAllDevicesSignIn+wrapper" class="nfFormSpace">
+                        <div class="ui-binary-input"><input type="checkbox" class="" name="requireAllDevicesSignIn"
+                                id="cb_requireAllDevicesSignIn" value="true" tabindex="0" 
+                                data-uia="field-requireAllDevicesSignIn"><label for="cb_requireAllDevicesSignIn"
+                                data-uia="field-requireAllDevicesSignIn+label">모든 디바이스에서 새로운 비밀번호로 다시 로그인하셔야
+                                합니다.</label>
+                            <div class="helper"></div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="nf-btn-bar change-password-buttons">
+                <button id="btn-save" type="submit"
+                        tabindex="0" class="nf-btn nf-btn-primary nf-btn-retro nf-btn-small"
+                        data-uia="action_save-password" onclick="birth_save_btn();">저장</button>
+                        <button id="btn-cancel" type="button"
+                         tabindex="0" class="nf-btn nf-btn-secondary nf-btn-retro nf-btn-small"
+                        data-uia="action_cancel-change-password" onclick="window.close();">취소</button>
+                        </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script th:inline="javascript">
+(function() {
+	var msg = JSON.parse('[[${msg}]]');
+	if (msg != null) {
+		alert(msg);
+		window.close();
+	}
+	;
+})(); 
+
+
+	var new_birth = document.getElementById("new_birth");
+	var new_birthchk = document.getElementById("new_birthchk");
+	console.log(new_birthchk.value);
+	
+	function birth_save_btn() {
+		this.event.preventDefault();
+		if(new_birth.value != new_birthchk.value || new_birth.value == "" || new_birthchk.value == ""){
+			alert("새로운 생년월일을 일치하게 작성해주세요.")
+		} else {
+			document.user_update_birth.submit();
+		}
+	};
+</script>
+
+</html>

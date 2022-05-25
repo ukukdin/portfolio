@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/user_info.css}" />
+ <link rel="stylesheet" type="text/css" th:href="@{/css/qnaNnotice.css}" />
+   <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}" />
+</head>
+
+<th:block th:replace="~{./include/layout :: setContent(~{:: .userInfo_outbox})}">
+	<div class="userInfo_outbox">
+		<form action="userInfo" name="admin_mypage" method="GET">
+			<div class="title">
+				<span class="noselect">회원 관리 페이지</span>
+			</div>
+ <th:block th:replace="~{./include/layout2 :: setContent(~{:: .userInfo_leftbox})}">
+
+			<div class="userInfo_leftbox">
+			</div>
+			</th:block>
+			<div class="rightbox">
+				<div id="board-search3">
+					<div class="search-window3">
+						<div class="search-wrap3" style="margin-right: 35px;">
+							<select class="sele1" name="searchType">
+								<option value="all"
+									th:selected="${pageVO.cri.searchType} == 'all'? 'selected'">전체</option>
+								<option value="email"
+									th:selected="${pageVO.cri.searchType} == 'email'? 'selected'">이메일</option>
+								<option value="id"
+									th:selected="${pageVO.cri.searchType} == 'id'? 'selected'">아이디</option>
+							</select> <input type="hidden" name="page" th:value="1"> <input
+								type="hidden" name="amount" th:value="${pageVO.amount}">
+							<select class="sele2" th:onchange="|admin_dataHandler(this)|">
+								<option value="10"
+									th:selected="${pageVO.amount}==10 ? 'selected'">10개 보기</option>
+								<option value="20"
+									th:selected="${pageVO.amount}==20 ? 'selected'">20개 보기</option>
+								<option value="50 "
+									th:selected="${pageVO.amount}==50 ? 'selected'">50개 보기</option>
+								<option value="100 "
+									th:selected="${pageVO.amount}==100 ? 'selected'">100개 보기</option>
+							</select> <label for="search" class="bline"></label> <input type="search"
+								name="searchName" placeholder="검색어를 입력해주세요">
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-search">검색</span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div>
+					<table class="board-table">
+						<colgroup>
+							<col style="width: 5%">
+							<col style="width: 15%">
+							<col style="width: 15%">
+							<col style="width: 20%">
+							<col style="width: 10%">
+							<col style="width: 15%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col">No.</th>
+								<th scope="col">ID</th>
+								<th scope="col">전화번호</th>
+								<th scope="col">이메일</th>
+								<th scope="col">성별</th>
+								<th scope="col">가입일</th>
+							</tr>
+						</thead>
+						<tbody th:each="vo, state : ${userlist	}">
+							<tr>
+								<td>[[${state.index + 1}]]</td>
+								<td><a
+									th:href="@{/user/userDetail(user_id=${vo.user_id} ) }">[[${vo.user_id}]]</a>
+								</td>
+								<td>[[${vo.user_phone}]]</td>
+								<td>[[${vo.user_email}]]</td>
+								<td th:if ="${vo.user_gender} != '2' " >남</td>
+								<td th:unless="${vo.user_gender} != '2'">여</td>
+								<td>[[${#temporals.format(vo.user_date, 'yyyy-MM-dd')}]]</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="noticeQna_page3">
+
+					<ul class="pagenation">
+
+						<th:block th:if="${pageVO.realEnd != 0}">
+							<li><a
+								th:href="@{/user/userInfo(page=1, 
+													amount=${pageVO.amount},
+													
+													searchType=${pageVO.cri.searchType},
+													searchName=${pageVO.cri.searchName})}">
+
+									<i class="fa fa-angle-double-left" aria-hidden="true"> << </i>
+							</a></li>
+						</th:block>
+
+
+
+						<th:block th:if="${pageVO.prev}">
+							<li style="margin-right: 5px;"><a
+								th:href="@{/user/userInfo(page=${pageVO.start - 1 },
+													amount=${pageVO.amount},
+													searchType=${pageVO.cri.searchType},
+													searchName=${pageVO.cri.searchName} )}">
+									<i class="fa fa-angle-left" aria-hidden="true"> < </i>
+							</a></li>
+						</th:block>
+
+						<th:block th:each="page: ${pageVO.pageList}">
+							<li th:class="${pageVO.page == page? 'on' :''}"><a
+								th:href="@{/user/userInfo(page=${page}, 
+													amount=${pageVO.amount}, 
+													searchType=${pageVO.cri.searchType},
+												     searchName=${pageVO.cri.searchName})}">[[${page}]]
+							</a></li>
+						</th:block>
+
+						<th:block th:if="${pageVO.next}">
+							<li style="margin-left: 5px;"><a
+								th:href="@{/user/userInfo(page=${pageVO.end + 1},
+															amount=${pageVO.amount},
+															searchType=${pageVO.cri.searchType},
+															searchName=${pageVO.cri.searchName} )}">
+									<i class="fa fa-angle-right" aria-hidden="true">></i>
+							</a></li>
+
+						</th:block>
+						<th:block th:if="${pageVO.realEnd != 0}">
+							<li><a
+								th:href="@{/user/userInfo(page=${pageVO.realEnd},
+															amount=${pageVO.amount},
+															searchType=${pageVO.cri.searchType},
+															searchName=${pageVO.cri.searchName}
+															 )}">
+									<i class="fa fa-angle-double-right" aria-hidden="true">>></i>
+							</a></li>
+						</th:block>
+
+					</ul>
+				</div>
+
+			</div>
+		</form>
+	</div>
+</th:block>
+
+<script th:inline="javascript">
+
+function admin_dataHandler(a) {
+/* 	 		document.admin_mypage.page.value = 1;
+			document.admin_mypage.amount.value = a.value;
+			document.admin_mypage.submit();  */
+		
+			console.log(a.value);
+ 		 	location.href='/user/userInfo?page=1&amount=' + a.value; 
+		} 
+
+</script>

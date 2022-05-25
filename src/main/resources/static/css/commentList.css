@@ -1,0 +1,152 @@
+* {font-family: 'Noto Sans KR', sans-serif; text-decoration: none;}
+.commnetListBox {
+    margin: 0 auto;
+    width: 1130px;
+    height: auto;
+    /* border: 1px solid black; */
+}
+.commenttitle {
+	width : 100%;
+    float: left;
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    width: 15%;
+}
+ .commentboard {
+	margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.commentid {
+	font-size: 12px; 
+	font-weight: 300;  
+	color: #A1A1A1;
+}
+.commentdate {
+	width: 225px;
+	text-align: right;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color: #A1A1A1;
+	font-size: 12px;
+}
+.commentcontent {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-size: 14px;
+}
+
+.commentbox {
+    float: left;
+    width: 1130px;
+    height: auto;
+    box-sizing: border-box;
+    /* border: 1px solid black; */
+}
+.commentPage {
+	width: 1130px;
+	height: auto;
+	text-align: center;
+}
+.commentPage ul{
+	display: inline-block;
+	width: 446px;
+	padding-left: 0px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.commentPage li{
+	list-style: none;
+	width: 30px;
+	height: 25px;
+	line-height: 25px;
+	display: inline-block;
+	text-align : center;
+	border: 1px solid #A1A1A1;
+	font-size: 13px;
+	color: #A1A1A1;
+	border-radius:4px;
+	
+}
+.commentPage a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.noComment{
+	width: 1130px;
+	height: 300px;
+	text-align: center;
+	line-height: 300px;
+	font-size: 13px;
+	color: #A1A1A1;
+}
+.commentboardbottom{
+	border-bottom: 1px solid #A1A1A1;
+}
+.commentLike{
+	margin-left: 5px;
+	
+}
+.commentLikeForm{
+	width:20px;
+}
+
+.ct_make_heart {
+	line-height:10px;
+	border: 0px;
+	padding: 0px;
+    width: 9px;
+    height: 9px;
+    background: #a7a6a6;
+    position: relative; /*부모*/
+    transform: rotate(225deg);
+}
+.ct_make_heart:before, .ct_make_heart:after {
+    content: "";
+    width: 9px;
+    height: 9px;
+    position: absolute; /*자식*/
+    border-radius: 50%; /*둥글게*/
+    background: #a7a6a6;
+}
+.ct_make_heart:before {
+	left: 0%; 
+}
+.ct_make_heart:after {
+	top: 0%;
+}
+.ct_gr_make_heart {
+	line-height:10px;
+	border: 0px;
+	padding: 0px;
+    width: 9px;
+    height: 9px;
+    background: #d1d1d1;
+    position: relative; /*부모*/
+    transform: rotate(225deg);
+}
+.ct_gr_make_heart:before, .ct_gr_make_heart:after {
+    content: "";
+    width: 9px;
+    height: 9px;
+    position: absolute; /*자식*/
+    border-radius: 50%; /*둥글게*/
+    background: #d1d1d1;
+}
+.ct_gr_make_heart:before {
+	left: 0%; 
+}
+.ct_gr_make_heart:after {
+	top: 0%;
+}
+.reComment{
+	width: 70px;
+	font-size:12px;
+	color: #a7a6a6;
+	background-color: white;
+	border: none;
+}

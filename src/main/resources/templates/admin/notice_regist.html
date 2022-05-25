@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+       <link rel="stylesheet" th:href="@{/css/qnaNnotice.css}">
+</head>
+ 	<body>
+	<div class="noticeRegist_outbox">
+		<form name="noticeUpdate" method="post" action="noticeUpdate" enctype="multipart/form-data">
+			<div class="title">
+				<span class="noselect">공지사항</span>
+			</div>
+
+			<div class="rightbox1">
+				<li>
+					<table cellpadding="0" cellspacing="0" class="board_basic_view"
+						width="100%">
+						<tbody class="ttt">
+							<tr>
+								<th>등록일</th>
+								<td colspan="5">
+									[[${#temporals.format(adminvo.notices_date,'yyyy-MM-dd')}]]</td>
+							</tr>
+							<tr>
+							<th>조회수</th>
+							<td>[[${adminvo.notices_count}]]</td>
+							</tr>
+							<tr>
+								<th>번호</th>
+								<td><input type="hidden" class="inputw99p" name="admin_key" th:value="${adminvo.admin_key}"
+									readonly>[[${adminvo.admin_key}]]</td>
+									
+							</tr>
+						
+							
+							<tr>
+								<th>아이디</th>
+								<td><input type="text" class="inputw99p" name="admin_id"
+									th:value="${adminvo.admin_id}" readonly>
+									<span  th:unless="${vo.user_admin} eq true"></span>
+									
+									</td>
+							</tr>
+							<tr>
+								<th>제목</th>
+								<td colspan="5">
+								<input th:if="${vo.user_admin} eq true" type="text" class="inputw99p2" name="notices_title" th:value="${adminvo.notices_title}" >
+								<span  th:unless="${vo.user_admin} eq true">[[${adminvo.notices_title}]]</span>
+								</td>
+
+							</tr>
+							<tr>
+								<th>내용</th>
+								<td colspan="5" >
+									<div>
+									
+										<textarea name="notices_content" class="inputw99p1" 
+											style="height: 400px" th:if="${vo.user_admin} eq true" th:value="${adminvo.notices_content}" >[[${adminvo.notices_content}]]</textarea>
+											<span th:unless="${vo.user_admin} eq true">[[${adminvo.notices_content}]]</span>
+									</div>
+								</td>
+							</tr>
+								  <tr>
+                    <th th:if="${vo.user_admin} == true" >첨부파일</th>
+				
+
+                     <td th:each ="list : @{adminvo.filename}" th:if="${vo.user_admin} == true">
+                
+                      <input name="file" type="file" class="file_class"  th:if="${vo.user_admin} == true">
+            
+
+						</tbody>
+
+					</table>
+
+				</li>
+				<div class="notice_regist_btn1">
+
+					<a th:href="@{수정JS}" title="Button fade lightblue"
+						th:onclick="|notice_update()|" class="submit" th:if="${vo.user_admin} == true">
+						
+						수정</a> <a
+						th:href="@{수정js}" title="Button fade lightblue"
+						th:onclick="|notice_delete()|" class="submit" th:if="${vo.user_admin} == true">
+						삭제</a>
+				</div>
+
+
+			</div>
+
+
+
+
+
+
+		</form>
+	</div>
+	</body>
+
+
+<script th:inline="javascript">
+	function notice_update(){
+		this.event.preventDefault();
+		
+		document.noticeUpdate.action="noticeUpdate";
+		document.noticeUpdate.submit();
+	}
+	function notice_delete(){
+		this.event.preventDefault();
+		
+		if(confirm("삭제후에는 복구가 불가능합니다.")){
+			document.noticeUpdate.action="noticeDelete";
+			document.noticeUpdate.submit();		}
+	}
+    
+    
+    
+</script>
+
+
+</html>

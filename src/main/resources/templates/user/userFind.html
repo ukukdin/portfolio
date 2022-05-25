@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+<style>
+	* {
+	font-family: sans-serif;
+	}
+	.find_id_div {
+		text-align : center;
+	}
+	.img_logo { 
+		padding: 50px 0 50px 0;
+		overflow: block;
+		width: 400px;
+	}	
+	
+	.find_id_submit_btn {
+		display : absolute;
+		margin-left : 105px;
+		width: 204px;
+		color: white;
+		background-color: #0041C2;
+		height: 30px;
+		border-color: #0041C2;
+    	cursor: pointer;
+		
+	}
+	
+	.find_id_input{
+		height : 30px;
+		width: 200px;
+		border: 1px solid #d5d5d5;
+		margin-bottom : 10px;
+	}
+	
+	p {
+	text-align: center;
+	}
+</style>
+</head>
+<body>
+    <form action="find_id" method="POST">
+        <div class="find_id_div">
+			<img src="/img/logo.png" class = "img_logo">
+            <input type="text" name="user_name" class="find_id_input" placeholder="이름 입력"><br>
+            <input type="text" name="user_email" class="find_id_input" placeholder="이메일 입력"><br>
+        </div>
+            <input href="" type="submit" class="find_id_submit_btn" value="이메일 인증">
+    </form>
+    <p>비밀번호를 찾으시나요? <a href="/user/userFindPw">비밀번호 찾기</a></p>
+
+    
+</body>
+</html>

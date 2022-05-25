@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+       <link rel="stylesheet" th:href="@{/css/qnaNnotice.css}">
+</head>
+<body>
+ 
+
+
+    <div class="noticeUpdate_outbox">
+        <form action="">
+        <div class="title"> 
+          <span class="noselect">공지사항</span>
+       </div>
+ 
+			</th:block>
+        <div class="rightbox"> <li>
+            <table cellpadding="0" cellspacing="0" class="board_basic_view" width="100%">
+                <tbody class="ttt">
+                    <tr >
+                        <th>등록일</th>
+                        <td colspan="5">[[${#temporals.format(adminvo.notices_date,'yyyy-MM-dd')}]</td>
+                    </tr>
+                    <tr>
+                    <th>번호</th>
+                    <td><input type="hidden" class="inputw99p" name="admin_key"  readonly>[[${adminvo.admin_key}]]</td>
+                    </tr>
+                    <tr>
+                        <th>아이디</th>
+                        <td><input type="text" class="inputw99p" name="admin_id" th:value="${adminvo.admin_id}" readonly></td>
+                    </tr>
+                    <tr>
+                        <th>제목</th>
+                        <td colspan="5">
+                            <a th:href="@{/admin/notice_regist(admin_key=${adminvo.admin_key})}" >[[${adminvo.notices_title}]]</a>
+
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>내용</th>
+                        <td colspan="5">
+                            <div>
+                                <textarea name="notices_content" class="inputw99p1" style="height: 400px" >[[${adminvo.notices_content}]]</textarea>
+                            </div>
+                        </td>
+                    </tr>
+                   
+                </tbody>
+
+               </table>
+               
+            </li>
+            <div class="btn1">
+    
+               <a th:href="@{수정js}" title="Button fade lightblue"  th:onclick="|notice_update()|" class="submit">수정</a>
+               
+                <a href="test" title="Button fade lightblue" class="button btnFade btnLightBlue">수정</a>
+            </div>
+           
+            
+        </div>
+               
+         
+               
+               
+               
+       
+</form>
+    </div>
+    </body>
+    <script type="text/javascript">
+    function notice_update(){
+		this.event.prenventDefault();
+		
+		document.notice_update.action="noticeUpdate";
+		document.notice_update.submit();
+	}
+    </script>
+</html>

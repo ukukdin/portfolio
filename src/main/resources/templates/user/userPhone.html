@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/userPopup.css">
+</head>
+
+<body>
+    <div class="bd">
+        <div class="responsive-account-container">
+            <form class="change-password-form" data-uia="change-password-form" method="post" novalidate="" name="user_update_phone" action ="user_update_phone">
+                <h1>핸드폰번호 변경</h1>
+                <small>핸드폰번호 양식 : 010-1234-5678</small>
+                <ul class="simpleForm structural ui-grid">
+                    <li data-uia="field-currentPassword+wrapper" class="nfFormSpace">
+                        <div data-uia="field-currentPassword+container" class="nfInput">
+                            <div class="nfInputPlacement"><label class="input_id" placeholder="currentPassword"><input
+                                        type="tel" data-uia="field-currentPassword" name="user_phone"
+                                        class="nfTextField" id="user_phone" value="" tabindex="0"
+                                        autocomplete="off" maxlength="60" minlength="4" dir="" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+                                        placeholder="기존 번호"></label></div>
+                        </div>
+                    </li>
+                    <li data-uia="field-newPassword+wrapper" class="nfFormSpace">
+                        <div data-uia="field-newPassword+container" class="nfInput">
+                            <div class="nfInputPlacement"><label class="input_id" placeholder="newPassword"><input
+                                        type="tel" data-uia="field-newPassword" name="user_newphone"
+                                        class="nfTextField" id="new_phone" value="" tabindex="0" autocomplete="off"
+                                        maxlength="60" minlength="6" dir="" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+                                        placeholder="새로운 번호"></label></div>
+                        </div>
+                    </li>
+                    <li data-uia="field-confirmNewPassword+wrapper" class="nfFormSpace">
+                        <div data-uia="field-confirmNewPassword+container" class="nfInput">
+                            <div class="nfInputPlacement"><label class="input_id"
+                                    placeholder="confirmNewPassword"><input type="tel"
+                                        data-uia="field-confirmNewPassword" name="confirmNewPassword"
+                                        class="nfTextField" id="new_phonechk" value="" tabindex="0"
+                                        autocomplete="off" maxlength="60" minlength="6" dir="" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+                                        placeholder="새로운 번호 재입력"></label></div>
+                        </div>
+                    </li>
+                    <li data-uia="field-requireAllDevicesSignIn+wrapper" class="nfFormSpace">
+                        <div class="ui-binary-input"><label for="cb_requireAllDevicesSignIn"
+                                data-uia="field-requireAllDevicesSignIn+label">정보 변경 후 다시 로그인 하셔야 합니다.</label>
+                            <div class="helper"></div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="nf-btn-bar change-password-buttons">
+                <button id="btn-save" type="submit" autocomplete="off"
+                        tabindex="0" class="nf-btn nf-btn-primary nf-btn-retro nf-btn-small"
+                        data-uia="action_save-password" placeholder="" onclick="phone_save_btn();">저장</button>
+                        <button id="btn-cancel" type="button"
+                        autocomplete="off" tabindex="0" class="nf-btn nf-btn-secondary nf-btn-retro nf-btn-small"
+                        data-uia="action_cancel-change-password" onclick="window.close();">취소</button></div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script th:inline="javascript">
+(function() {
+	var msg = JSON.parse('[[${msg}]]');
+	if (msg != null) {
+		alert(msg);
+		window.close();
+	}
+	;
+})(); 
+
+
+	var new_phone = document.getElementById("new_phone");
+	var new_phonechk = document.getElementById("new_phonechk");
+	console.log(new_phonechk.value);
+	
+	function phone_save_btn() {
+		this.event.preventDefault();
+		if(new_phone.value != new_phonechk.value || new_phone.value == "" || new_phonechk.value == ""){
+			alert("새로운 번호를 일치하게 작성해주세요.")
+		} else {
+			document.user_update_phone.submit();
+		}
+	};
+</script>
+
+</html>

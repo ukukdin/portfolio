@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" th:href="@{/css/movieDetail.css}">
+<th:block
+	th:replace="~{./include/layout :: setContent( ~{:: .outbox} ) }">
+
+	<body>
+		<div class="outbox">
+			<div class="videobox">
+				<iframe width="1130" height="636" th:src="${url}"
+					title="YouTube video player" frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allowfullscreen></iframe>
+			</div>
+			<div class="summarybox">
+				<div class="summary">
+					<div class="summary-top">
+						<script th:inline="javascript">
+							(function() {
+								var age = JSON
+										.parse('[[${movieVo.movie_age}]]')
+										.substr(0, 2);
+								if (age == "전체") {
+									document
+											.write('<p class="age" style="background-color:#00A573" )>전체</p>');
+								} else if (age == "12") {
+									document
+											.write('<p class="age" style="background-color: #4DC9FA">12</p>');
+								} else if (age == "15") {
+									document
+											.write('<p class="age" style="background-color: #ffd900">15</p>');
+								} else if (age == "청소") {
+									document
+											.write('<p class="age" style="background-color: #FF0000">18</p>');
+								}
+							})();
+						</script>
+
+						<span class="md_title">[[${movieVo.movie_nm}]]</span>
+						<th:block th:if="${movieLike != 0}" >
+							<div class="movieLike">
+								<div class="md_container">
+									<form action="removeMovieLike" method="post" class="movieLikeForm">
+										<input name="movie_koficCd" type="hidden" th:value="${movieVo.movie_koficCd}">
+										<button type="submit" class="md_make_heart"></button>
+									</form>
+								</div>
+							</div>
+						</th:block>
+						<th:block th:unless="${movieLike != 0}">
+							<div class="movieLike">
+								<div class="md_container">
+								
+									<form action="addMovieLike" method="post" class="movieLikeForm">
+										<input name="movie_koficCd" type="hidden" th:value="${movieVo.movie_koficCd}">
+										<button type="submit" class="gr_make_heart"></button>
+									</form>
+								</div>
+							</div>
+						</th:block>		
+
+					</div>
+					<div class="summary-bottom">
+						<div
+							th:text="${#strings.substring(movieVo.movie_openDt, 0, 4) + '&nbsp;&nbsp;' + '|' + '&nbsp;&nbsp;'}"
+							class="year"></div>
+						<div
+							th:text="${movieVo.movie_gr + '&nbsp;&nbsp;' + '|' + '&nbsp;&nbsp;'}"
+							class="genre"></div>
+						<div
+							th:text="${movieVo.movie_nt + '&nbsp;&nbsp;' + '|' + '&nbsp;&nbsp;'}"
+							class="country"></div>
+						<div
+							th:text="${movieVo.movie_time +'분'+ '&nbsp;&nbsp;' + '|' + '&nbsp;&nbsp;'}"
+							class="runningtime"></div>
+						<div class="actor">
+							<strong>주연</strong>
+							<div  th:each=" act : ${#strings.arraySplit(movieVo.movie_actNm, ',')}" >
+								<div  th:text="${act}" ></div>
+							</div>
+							&nbsp; | &nbsp;
+						</div>
+						<div class="rate" style="font-weight: bold" th:text="${starRate}"></div>&nbsp;
+						<div class="Stars" th:style="${'--rating:' + (starRate * 2) }";
+							aria-label="Rating of this product is 2.3 out of 5.">
+						</div>
+						
+					</div>
+				</div>
+				
+				<div class="credit">
+				
+					<div class="buy">
+						<button th:onclick="'location.href=\'' + @{/movie/movieBuy(movie_koficCd=${movieVo.movie_koficCd})} + '\''">구매</button>
+					</div>
+				
+					<div class="rent">
+						<button th:onclick="'location.href=\'' + @{/movie/movieRent(movie_koficCd=${movieVo.movie_koficCd})} + '\''">대여</button>
+
+					</div>
+				</div>
+
+			</div>
+			<div class="md_detailbox">
+				<p class="md_detailtitle">줄거리</p>
+				<p class="md_tagline" th:text="|&quot; ${movieVo.movie_tagLine} &quot; |"></p>
+				<p
+					th:utext="${#strings.replace(movieVo.movie_ov, '. ', '.&lt;br /&gt;')}"
+					class="md_detailcontents"></p>
+			</div>
+			
+			<!-- 리뷰 등록 -->
+			<!-- 로그인 했을 경우  -->
+			<th:block th:if="${checkLogin == 1}">
+				<div class="ratingbox">
+					<div class="ratingtitle">별점 등록</div>
+						<div class="rating">
+							<form name="myform" id="myform" method="post" action="addStarRate">
+								<fieldset>
+									<input type="radio" name="rating" value="5" id="rate1"><label
+										for="rate1">⭐</label> <input type="radio" name="rating"
+										value="4" id="rate2"><label for="rate2">⭐</label> <input
+										type="radio" name="rating" value="3" id="rate3"><label
+										for="rate3">⭐</label> <input type="radio" name="rating"
+										value="2" id="rate4"><label for="rate4">⭐</label> <input
+										type="radio" name="rating" value="1" id="rate5"><label
+										for="rate5">⭐</label>
+								</fieldset>
+								<input type="hidden" name="movie_koficCd" th:value="${movieVo.movie_koficCd}">
+								<button type="submit" class="starRateBtn">등록</button>
+							</form>
+						</div>
+					</div>
+	
+					<div class="commentwrite">
+						<p class="commenttitle">리뷰 등록</p>
+						<form action="/comment/commentForm" method="post">
+							<textarea rows="4" placeholder="리뷰를 입력해주세요." required
+								name="comment_com"></textarea>
+							<br>
+							<button type="submit">리뷰 등록</button>
+							<!-- <input type="hidden" name="user_id" th:value="${userVo.user_id}"> -->
+							<input type="hidden" name="comment_mn" th:value="${movieVo.movie_koficCd}">
+						</form>
+					</div>
+				</th:block>
+				<th:block th:unless="${checkLogin == 1}">
+					<div class="ratingtitle">별점 등록</div>
+					<div class="checkLogin">
+						별점을 등록하려면 로그인 해주세요.
+					</div>
+					<div class="commentwrite">
+						<p class="commenttitle">리뷰 등록</p>
+					</div>
+					<div class="checkLogin">
+						리뷰를 등록하려면 로그인 해주세요.
+					</div>
+				</th:block>
+				
+				<!-- 리뷰 목록 -->
+				<script type="text/javascript">
+					//<![CDATA[
+					function calcHeight() {
+						//find the height of the internal page
+	
+						var the_height = document.getElementById('the_iframe').contentWindow.document.body.scrollHeight;
+	
+						//change the height of the iframe
+						document.getElementById('the_iframe').height = the_height;
+	
+						//document.getElementById('the_iframe').scrolling = "no";
+						document.getElementById('the_iframe').style.overflow = "hidden";
+					}
+					//
+					(function() {
+						var movieLikeMsg = JSON.parse('[[${movieLikeMsg}]]');
+						if(movieLikeMsg != null) {			
+							alert(movieLikeMsg);
+						}
+					})();
+				</script>
+			<div class="commentbox">
+				<iframe id="the_iframe" onload="calcHeight();" name="" title=""
+					frameborder="0" scrolling="no"
+					style="overflow-x: hidden; overflow: auto; width: 100%; min-height: 500px;"
+					th:src="${commentUrl}" marginwidth="0" marginheight="0"></iframe>
+			</div>
+
+		</div>
+	</body>
+</th:block>
+<script th:inline="javascript">
+(function() {
+    var msg = JSON.parse('[[${msg}]]');
+    if (msg != null) {
+       alert(msg);
+    }
+ })();
+</script>
+
+</html>

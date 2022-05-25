@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	* {
+	font-family: sans-serif;
+	}
+	.find_pw_div {
+		text-align : center;
+	}
+	.img_logo { 
+		padding: 50px 0 50px 0;
+		overflow: block;
+		width: 400px;
+	}	
+	
+	.find_pw_submit_btn {
+		display : absolute;
+		margin-left : 105px;
+		width: 204px;
+		color: white;
+		background-color: #0041C2;
+		height: 30px;
+		border-color: #0041C2;
+    	cursor: pointer;
+		
+	}
+	
+	.find_pw_input{
+		height : 30px;
+		width: 200px;
+		border: 1px solid #d5d5d5;
+		margin-bottom : 10px;
+	}
+	
+	p {
+	text-align : center;
+	}
+</style>
+</head>
+
+<body>
+    <form action="find_pw" method="POST">
+        <div class="find_pw_div">
+			<img src="/img/logo.png" class = "img_logo">
+            <input type="text" name="user_id" class="find_pw_input" placeholder="아이디 입력"><br>
+            <input type="text" name="user_email" class="find_pw_input" placeholder="이메일 입력"><br>
+        </div>
+            <input href="" type="submit" class="find_pw_submit_btn" value="이메일 인증">
+    </form>
+    
+    <p>아이디를 찾으시나요? <a href="/user/userFind">아이디 찾기</a></p>
+
+</body>
+</html>

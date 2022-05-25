@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" th:href="@{/css/userQnaRegist.css}" />
+<th:block th:replace="~{./include/layout :: setContent( ~{:: .userQnaRegist} ) }">
+
+<div class="userQnaRegist">
+    <div class="qnar_outbox">
+        <form action="qa_regist" method="POST" name = "qa_regist">
+            <div class="qnar_title">
+                <span class="noselect">문의사항 등록</span>
+            </div>
+
+            
+            <div class="qnar_rightbox">
+            <ul class="qnar_ul">
+                <li>
+                    <table class="qnar_board_basic_view">
+                        <tbody class="qnar_ttt">
+                            <tr class="qnar_tr">
+                                <th class="qnar_th">아이디</th>
+                                <td><input type="text" class="inputw99p" name="user_id" readonly th:value="${vo.user_id}"></td>
+                            </tr>
+                            <tr class="qnar_tr">
+                                <th class="qnar_th">제목</th>
+                                <td colspan="5">
+                                    <input type="text" class="inputw99p2" name="qa_title" required>
+                                </td>
+
+                            </tr>
+                            <tr class="qnar_tr">
+                                <th class="qnar_th">내용</th>
+                                <td colspan="5">
+                                    <div>
+                                        <textarea class="inputw99p1" style="height: 400px" name="qa_content" required></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </li>
+                </ul>
+                <div class="qnar_btn">
+                    <a href="/user/userMypage" title="Button fade lightblue" class="qnar_button btnFade qnar_btnLightBlue">목록</a>
+                    <a id="qa_regist_btn" href="" title="Button fade lightblue" class="qnar_button btnFade qnar_btnLightBlue">등록</a>
+                </div>
+            </div>
+    </form>
+    </div>
+</div>
+</th:block>
+<script th:inline="javascript">
+	var qa_regist_btn = document.getElementById("qa_regist_btn");
+	
+	(function() {
+		var msg = JSON.parse('[[${msg}]]');
+		if (msg != null) {
+			alert(msg);
+			/* console.log(check_id); */
+			/* user_id.value = "${check_id}"; model에서 저장한 값을 JS에서 불러서 사용하는 방법이 뭘까? */
+		}
+		;
+	})();
+	
+	qa_regist_btn.onclick = function() {
+		event.preventDefault();
+		document.qa_regist.submit();
+	}
+
+	
+
+</script>

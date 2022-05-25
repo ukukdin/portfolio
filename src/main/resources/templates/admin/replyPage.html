@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/qnaNnotice.css}">
+<th:block
+	th:replace="~{./include/layout :: setContent(~{:: .replyPage_outbox})}">
+
+	<body>
+		<div class="replyPage_outbox">
+			<form action="qa_update" method="POST" name="qa_update">
+				<div class="title">
+					<span class="noselect"></span>
+				</div>
+<th:block
+	th:replace="~{./include/layout2 :: setContent(~{:: .leftbox})}">
+			<div class="leftbox">
+				
+			</div>
+			</th:block>
+				<div class="rightbox">
+					<table cellpadding="0" cellspacing="0" class="board_basic_view"
+						width="100%">
+						<tbody class="ttt">
+							<tr>
+								<th>등록일</th>
+								<td colspan="5">[[${#temporals.format(qa_data.get(0).qa_date,'yyyy-MM-dd')}]]</td>
+							</tr>
+							<tr>
+								<th>아이디</th>
+								<td><input type="text" class="inputw99p" name="id"
+									th:value="${qa_data.get(0).user_id}" readonly></td>
+							</tr>
+							<tr>
+								<th>제목</th>
+								<td colspan="5"><input type="text" class="inputw99p2"
+									name="title" th:value="${qa_data.get(0).qa_title}" readonly>
+									<input type="hidden" name="qa_key"
+									th:value="${qa_data.get(0).qa_key}"></td>
+
+							</tr>
+							<tr>
+								<th>내용</th>
+								<td colspan="5">
+									<div>
+										<textarea name="content" class="inputw99p1"
+											style="height: 400px" readonly>[[${qa_data.get(0).qa_content}]]</textarea>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>답변</th>
+								<td colspan="3">
+									<div>
+										<textarea th:placeholder="${qa_data.get(0).qa_comment}"
+											name="qa_comment" class="inputw99p1" style="height: 200px"
+											resize="none"></textarea>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="btn1">
+						<a href="" title="Button fade lightblue" class="button btnFade btnLightBlue" id="qa_update_btn">등록</a>
+					</div>
+
+
+
+
+
+
+				</div>
+
+
+
+
+
+
+			</form>
+		</div>
+
+
+	</body>
+
+</th:block>
+
+	<script th:inline="javascript">
+	(function() {
+		var msg = JSON.parse('[[${msg}]]');
+		if (msg != null) {
+			alert(msg);
+			/* console.log(check_id); */
+			/* user_id.value = "${check_id}"; model에서 저장한 값을 JS에서 불러서 사용하는 방법이 뭘까? */
+		}
+		;
+	})();
+	var qa_update_btn = document.getElementById("qa_update_btn");
+
+
+	qa_update_btn.onclick = function() {
+		event.preventDefault();
+		document.qa_update.submit();
+	}
+
+
+</script>

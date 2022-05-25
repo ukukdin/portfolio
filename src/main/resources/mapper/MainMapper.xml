@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project2.movieproject.main.MainMapper">
+	
+	<select id="getMainBanner" resultType="MovieVO">
+		SELECT *
+		FROM MOVIE 
+		ORDER BY MOVIE_RECOMMEND DESC, MOVIE_OPENDT DESC
+		LIMIT 10
+	</select>
+	
+	<select id="getMainRank" resultType="MovieVO">
+		SELECT *
+		FROM MOVIE
+		LEFT OUTER JOIN (
+		SELECT MOVIE_KOFICCD AS MOVIE_KOFICCD,
+		COUNT(MOVIE_KOFICCD) AS MOVIE_BUYCNT
+		FROM BUY
+		GROUP BY MOVIE_KOFICCD
+		) A
+		ON MOVIE.MOVIE_KOFICCD = A.MOVIE_KOFICCD
+		<choose>
+			<when test='genre == "act".toString()'>
+				WHERE MOVIE_GR="액션"
+			</when>
+			<when test='genre == "fan".toString()'>
+				WHERE MOVIE_GR="판타지" OR MOVIE_GR="SF"
+			</when>
+			<when test='genre == "crime".toString()'>
+				WHERE MOVIE_GR="범죄"
+			</when>
+			<when test='genre == "rom".toString()'>
+				WHERE MOVIE_GR="멜로/로맨스"
+			</when>
+			<when test='genre == "com".toString()'>
+				WHERE MOVIE_GR="코미디"
+			</when>
+			<when test='genre == "hor".toString()'>
+				WHERE MOVIE_GR="공포(호러)" OR MOVIE_GR="스릴러"
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		ORDER BY MOVIE_BUYCNT DESC, MOVIE_OPENDT DESC
+		LIMIT 5;
+	</select>
+	
+	<select id="getMainRankList" resultType="MovieVO">
+		SELECT *
+		FROM MOVIE
+		LEFT OUTER JOIN (
+		SELECT MOVIE_KOFICCD AS MOVIE_KOFICCD,
+		COUNT(MOVIE_KOFICCD) AS MOVIE_BUYCNT
+		FROM BUY
+		GROUP BY MOVIE_KOFICCD
+		) A
+		ON MOVIE.MOVIE_KOFICCD = A.MOVIE_KOFICCD
+		ORDER BY MOVIE_BUYCNT DESC, MOVIE_OPENDT DESC
+		LIMIT 10;
+	</select>
+	
+	<select id="getMainRentRank" resultType="MovieVO">
+		SELECT *
+		FROM MOVIE
+		LEFT OUTER JOIN (
+		SELECT MOVIE_KOFICCD AS MOVIE_KOFICCD,
+		COUNT(MOVIE_KOFICCD) AS MOVIE_BUYCNT
+		FROM RENT
+		GROUP BY MOVIE_KOFICCD
+		) A
+		ON MOVIE.MOVIE_KOFICCD = A.MOVIE_KOFICCD
+		<choose>
+			<when test='genre == "act".toString()'>
+				WHERE MOVIE_GR="액션"
+			</when>
+			<when test='genre == "fan".toString()'>
+				WHERE MOVIE_GR="판타지" OR MOVIE_GR="SF"
+			</when>
+			<when test='genre == "crime".toString()'>
+				WHERE MOVIE_GR="범죄"
+			</when>
+			<when test='genre == "rom".toString()'>
+				WHERE MOVIE_GR="멜로/로맨스"
+			</when>
+			<when test='genre == "com".toString()'>
+				WHERE MOVIE_GR="코미디"
+			</when>
+			<when test='genre == "hor".toString()'>
+				WHERE MOVIE_GR="공포(호러)" OR MOVIE_GR="스릴러"
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		ORDER BY MOVIE_BUYCNT DESC, MOVIE_OPENDT DESC
+		LIMIT 5;
+	</select>
+	
+	<select id="getMainRentRankList" resultType="MovieVO">
+		SELECT *
+		FROM MOVIE
+		LEFT OUTER JOIN (
+		SELECT MOVIE_KOFICCD AS MOVIE_KOFICCD,
+		COUNT(MOVIE_KOFICCD) AS MOVIE_BUYCNT
+		FROM RENT
+		GROUP BY MOVIE_KOFICCD
+		) A
+		ON MOVIE.MOVIE_KOFICCD = A.MOVIE_KOFICCD
+		ORDER BY MOVIE_BUYCNT DESC, MOVIE_OPENDT DESC
+		LIMIT 10;
+	</select>
+	
+	<select id="getMainNotices" resultType="adminVO">
+		SELECT * 
+		FROM ADMIN_NOTICES
+		ORDER BY NOTICES_DATE DESC
+		LIMIT 5
+	</select>
+	
+	<select id="getMovie" resultType="MovieVO">
+		SELECT *
+		FROM MOVIE
+		WHERE MOVIE_KOFICCD = ${movie_koficCd}
+	</select>
+	
+	<select id="searchBuy" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM BUY
+		WHERE USER_ID=#{user_id} AND MOVIE_KOFICCD=#{movie_koficCd}
+	</select>
+	
+	<insert id="getBuy">
+		INSERT INTO BUY(USER_ID, MOVIE_KOFICCD) VALUES(#{user_id}, #{movie_koficCd})
+	</insert>
+	
+	<select id="searchRent" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM RENT
+		WHERE USER_ID=#{user_id} AND MOVIE_KOFICCD=#{movie_koficCd} AND RENT_STATUS=0
+	</select>
+	
+	<insert id="getRent">
+		INSERT INTO RENT(USER_ID, MOVIE_KOFICCD, RENT_ENDDATE) 
+		VALUES(#{user_id}, #{movie_koficCd}, DATE_ADD(NOW(), INTERVAL 3 DAY))
+	</insert>
+	
+</mapper>
