@@ -10,7 +10,7 @@
 - DB - MySQL
 
 # 프로젝트 영화 링크 사이트 입니다. 
-http://3.36.178.116:8383/main
+http://movieprojectnotflex.com:8383/main
 
 
 ## ERD 구조
