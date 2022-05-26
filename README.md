@@ -8,6 +8,7 @@
 - Front-end : CSS, JavaScript
 - Develop Tool - Spring boot
 - DB - MySQL
+- 배포 - AWS
 
 # 프로젝트 영화 링크 사이트 입니다. 
 http://movieprojectnotflex.com:8383/main
